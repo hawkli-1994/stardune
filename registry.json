@@ -37,9 +37,64 @@
           "path": "src/lib/ink/recipes/button-ink.ts",
           "type": "registry:lib",
           "target": "lib/ink/recipes/button-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
         }
       ],
       "dependencies": ["class-variance-authority", "radix-ui"]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Text field with sand-slip wash and star/horizon focus ink.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/input.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/input.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/input-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/input-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Sand-slip panel with loose pencil border.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/card.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/card.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/card-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/card-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": []
     }
   ]
 }

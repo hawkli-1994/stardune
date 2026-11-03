@@ -10,7 +10,8 @@
     "build": "tsc -p tsconfig.json --noEmit && vite build",
     "preview": "vite preview --port 4317",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "registry:check": "node tools/registry-check.mjs"
+    "registry:check": "node tools/registry-check.mjs",
+    "registry:sync": "node tools/registry-sync-public.mjs"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

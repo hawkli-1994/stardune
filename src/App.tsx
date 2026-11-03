@@ -3,6 +3,15 @@
 import * as React from "react"
 
 import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
 import { SandStage } from "@/components/playground/SandStage"
 import { cn } from "@/lib/utils"
 
@@ -35,13 +44,10 @@ export function App() {
         <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="space-y-2">
             <p className="text-sm tracking-wide text-muted-foreground">星沙 · Stardune</p>
-            <h1 className="text-2xl font-semibold text-foreground">Button playground</h1>
+            <h1 className="text-2xl font-semibold text-foreground">Component playground</h1>
             <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-              Watercolor washes on sand paper — rose primary, star-gold focus, horizon outline. Ink layers driven by{" "}
-              <code className="rounded bg-[color-mix(in_srgb,var(--sd-ink)_6%,transparent)] px-1 py-0.5 text-xs">
-                button-ink
-              </code>
-              .
+              Button, Input, and Card share the same watercolor ink recipes — sand-slip fills, rose/horizon outlines,
+              star-gold focus.
             </p>
           </div>
           <button
@@ -58,45 +64,50 @@ export function App() {
         </header>
 
         <SandStage className="p-6 sm:p-8">
-          <div className="flex flex-col gap-8">
-            <Section title="Variants">
+          <div className="flex flex-col gap-10">
+            <Section title="Button · variants">
               <div className="flex flex-wrap gap-3">
                 <Button>Primary rose</Button>
                 <Button variant="secondary">Star wash</Button>
                 <Button variant="outline">Outline</Button>
                 <Button variant="ghost">Ghost</Button>
                 <Button variant="destructive">Ember</Button>
-                <Button variant="link">Horizon link</Button>
               </div>
             </Section>
 
-            <Section title="Sizes">
-              <div className="flex flex-wrap items-center gap-3">
-                <Button size="sm">Small</Button>
-                <Button>Default</Button>
-                <Button size="lg">Large</Button>
-                <Button size="icon" aria-label="Star action">
-                  ✦
-                </Button>
+            <Section title="Input · field states">
+              <div className="flex max-w-sm flex-col gap-3">
+                <Input placeholder="Name on the sand…" />
+                <Input placeholder="Focus me (Tab)" aria-label="Focus demo" />
+                <Input placeholder="Invalid value" aria-invalid="true" defaultValue="???" />
+                <Input placeholder="Disabled" disabled />
               </div>
             </Section>
 
-            <Section title="Disabled">
-              <div className="flex flex-wrap gap-3">
-                <Button disabled>Primary</Button>
-                <Button variant="outline" disabled>
-                  Outline
-                </Button>
-                <Button variant="secondary" disabled>
-                  Secondary
-                </Button>
-              </div>
+            <Section title="Card · sand-slip panel">
+              <Card tone="lifted" className="max-w-md border-0 bg-transparent shadow-none">
+                <CardHeader>
+                  <CardTitle>Dune notes</CardTitle>
+                  <CardDescription>A loose panel on desert paper — not a notebook pad.</CardDescription>
+                </CardHeader>
+                <CardContent className="text-sm leading-relaxed text-foreground/90">
+                  Cards use layered sand-slip washes and a double pencil border. Pair with inputs and buttons for a
+                  cohesive field set.
+                </CardContent>
+                <CardFooter className="gap-2">
+                  <Button size="sm">Save draft</Button>
+                  <Button size="sm" variant="outline">
+                    Cancel
+                  </Button>
+                </CardFooter>
+              </Card>
             </Section>
           </div>
         </SandStage>
 
         <p className="text-center text-xs text-muted-foreground">
-          Hover and focus buttons to see wash and star-gold focus rings. Press for pressed wash depth.
+          Tab into inputs for star/horizon focus ink. Registry stubs:{" "}
+          <code className="text-[11px]">@stardune/input</code>, <code className="text-[11px]">@stardune/card</code>.
         </p>
       </main>
     </div>

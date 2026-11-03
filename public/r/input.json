@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input",
+  "title": "Input",
+  "description": "Sand-slip field with rose outline and star/horizon focus washes.",
+  "type": "registry:ui",
+  "dependencies": [],
+  "registryDependencies": [
+    "./stardune-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/input.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/input.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { useInk } from \"@/lib/ink/react\"\nimport { inputRecipe } from \"@/lib/ink/recipes/input-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst controlClass =\n  \"h-full w-full min-w-0 flex-1 appearance-none border-0 bg-transparent px-3 py-1 text-sm text-foreground outline-none \" +\n  \"placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-70 \" +\n  \"file:border-0 file:bg-transparent file:text-sm file:font-medium \" +\n  \"[&::-webkit-search-cancel-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none\"\n\nconst frameClass =\n  \"relative isolate flex h-9 w-full min-w-0 items-center rounded-[var(--radius-md)] \" +\n  \"caret-[var(--sd-caret)]\"\n\nfunction Input({\n  className,\n  type,\n  seed,\n  style,\n  ref,\n  ...props\n}: React.ComponentProps<\"input\"> & { seed?: string | number }) {\n  const invalid = props[\"aria-invalid\"] === true || props[\"aria-invalid\"] === \"true\"\n  const { hostRef, hostProps, node } = useInk({\n    recipe: inputRecipe,\n    params: { disabled: !!props.disabled, invalid, readOnly: !!props.readOnly },\n    kind: \"field\",\n    seed,\n    still: true,\n  })\n\n  if (type === \"hidden\") {\n    return <input type=\"hidden\" ref={ref} className={className} {...props} />\n  }\n\n  return (\n    <span\n      data-slot=\"input-frame\"\n      data-ink-focus=\"within\"\n      ref={hostRef}\n      {...hostProps}\n      style={style}\n      className={cn(frameClass, className)}\n    >\n      {node}\n      <input data-slot=\"input\" type={type} ref={ref} className={controlClass} {...props} />\n    </span>\n  )\n}\n\nexport { Input }\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/input-ink.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/input-ink.ts",
+      "content": "import { wash } from '@/lib/ink/fills'\nimport { roundRectPoly } from '@/lib/ink/geom'\nimport { box, focusRing } from '@/lib/ink/shapes'\nimport { clamp } from '@/lib/ink/rng'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { softFill } from '@/lib/ink/recipes/wash-utils'\n\nexport interface InputParams {\n  disabled?: boolean\n  invalid?: boolean\n  readOnly?: boolean\n}\n\nexport const inputRecipe = defineRecipe<InputParams>({\n  id: 'input',\n  kind: 'field',\n  layers: ['rest', 'hover', 'focus', 'disabled', 'invalid'],\n  lazy: ['focus'],\n  pad: 8,\n  draw(ink, { w, h }, { disabled, invalid, readOnly }, ctx) {\n    const r = clamp(h * 0.14, 3.5, 7)\n    const inset = 0.55\n    const body = roundRectPoly(inset, inset, w - 2 * inset, h - 2 * inset, r)\n\n    if (disabled) {\n      if (ctx.lazyOnly) return\n      ink.layer('disabled', () => {\n        wash(ink, body, 'sand-shade', { alpha: 0.48, wobble: 0.45, material: 'wash' })\n        box(ink, 0.5, 0.5, w - 1, h - 1, {\n          pen: 'pencil.fine',\n          corner: r,\n          loose: 0.35,\n          opts: { alpha: 0.35, simple: true },\n        })\n      })\n      return\n    }\n\n    if (invalid) {\n      ink.layer('invalid', () => {\n        softFill(ink, body, [\n          { color: 'wash-rose', alpha: 0.35, wobble: 0.8 },\n          { color: 'ember', alpha: 0.18, inset: 0.6 },\n        ])\n        box(ink, 0.55, 0.55, w - 1.1, h - 1.1, {\n          pen: 'rose.fine',\n          corner: r,\n          loose: 1,\n          opts: { alpha: 0.75, wobble: 0.4, simple: true, color: 'danger' },\n        })\n      })\n    }\n\n    ctx.lazy('focus', (fink) => {\n      wash(fink, body, 'star', { alpha: 0.22, wobble: 0.6, material: 'wash', inset: 0.15 })\n      wash(fink, body, 'horizon', { alpha: 0.12, wobble: 0.75, material: 'wash', inset: 1.2 })\n      focusRing(fink, 0, 0, w, h, {\n        r,\n        pen: 'horizonPencil.fine',\n        opts: { alpha: 0.9, wobble: 0.32, simple: true },\n      })\n    })\n    if (ctx.lazyOnly) return\n\n    ink.layer('rest', () => {\n      softFill(ink, body, [\n        { color: 'sand-slip', alpha: 0.72, wobble: 0.55 },\n        { color: 'sand', alpha: 0.28, inset: 0.8 },\n      ])\n      box(ink, 0.55, 0.55, w - 1.1, h - 1.1, {\n        pen: readOnly ? 'pencil.fine' : 'rose.fine',\n        corner: r,\n        loose: readOnly ? 0.5 : 0.95,\n        opts: {\n          alpha: readOnly ? 0.42 : 0.58,\n          wobble: 0.36,\n          simple: w < 120,\n          color: readOnly ? 'pencil' : 'ink-soft',\n        },\n      })\n    })\n\n    ink.layer('hover', () => {\n      if (readOnly) return\n      wash(ink, body, 'rose-wash', { alpha: 0.28, wobble: 0.85, material: 'wash' })\n      box(ink, 0.8, 0.8, w - 1.6, h - 1.6, {\n        pen: 'ink.fine',\n        corner: r,\n        loose: 0.85,\n        opts: { alpha: 0.4, simple: true, color: 'horizon' },\n      })\n    })\n  },\n})\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/wash-utils.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/wash-utils.ts",
+      "content": "import type { Ink } from '@/lib/ink/builder'\nimport type { Pt } from '@/lib/ink/types'\nimport type { PaintKey } from '@/lib/ink/paint'\nimport { wash } from '@/lib/ink/fills'\n\nexport function softFill(\n  ink: Ink,\n  body: Pt[],\n  layers: Array<{ color: PaintKey; alpha: number; inset?: number; wobble?: number }>,\n) {\n  for (const layer of layers) {\n    wash(ink, body, layer.color, {\n      alpha: layer.alpha,\n      inset: layer.inset ?? 0.4,\n      wobble: layer.wobble ?? 0.95,\n      material: 'wash',\n    })\n  }\n}\n"
+    }
+  ]
+}

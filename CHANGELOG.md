@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Input & Card
+
+- **`input-ink` / `Input`**: Sand-slip wash field, rose/pencil outline, hover rose-wash, **star + horizon focus** ring, invalid ember wash layer.
+- **`card-ink` / `Card`**: Sand-slip panel with soft gold tint and **double loose border**; shadcn-style `CardHeader`, `Title`, `Description`, `Content`, `Footer`.
+- Shared **`wash-utils.ts`** for layered watercolor fills; registry stubs `@stardune/input`, `@stardune/card`.
+
 ### Visual — Button & playground (星沙 polish)
 
 - **Button ink**: Replaced marker-style `bandFill` strokes with layered **watercolor washes** (`rose-wash`, `wash-rose`, star/ember tints), softer loose outlines, and a **star-gold focus** halo plus horizon pencil ring.

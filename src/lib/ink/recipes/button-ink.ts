@@ -3,6 +3,7 @@ import { roundRectPoly } from '@/lib/ink/geom'
 import { box, focusRing, underline } from '@/lib/ink/shapes'
 import { clamp } from '@/lib/ink/rng'
 import { defineRecipe } from '@/lib/ink/recipes'
+import { softFill } from '@/lib/ink/recipes/wash-utils'
 import type { PaintKey } from '@/lib/ink/paint'
 
 export const buttonVariantList = ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'] as const
@@ -15,21 +16,6 @@ export interface ButtonParams {
   size: ButtonSize
   disabled?: boolean
   shape?: 'default' | 'pill'
-}
-
-function softFill(
-  ink: import('@/lib/ink/builder').Ink,
-  body: import('@/lib/ink/types').Pt[],
-  layers: Array<{ color: PaintKey; alpha: number; inset?: number }>,
-) {
-  for (const layer of layers) {
-    wash(ink, body, layer.color, {
-      alpha: layer.alpha,
-      inset: layer.inset ?? 0.4,
-      wobble: 0.95,
-      material: 'wash',
-    })
-  }
 }
 
 export const buttonRecipe = defineRecipe<ButtonParams>({
