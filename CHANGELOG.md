@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Calendar, Date Picker
+
+- **`calendar-ink` / `Calendar`**: react-day-picker v9 on **sand-slip panel** ink; **rose selected** wash, **horizon today** ring, soft pencil cell hovers; range styling included.
+- **`date-picker.tsx`**: `DatePicker` and **`DateRangePicker`** (Popover `bare` + outline Button + Calendar); **date-fns** formatting.
+- **`PopoverContent`**: optional `bare` for calendar/combobox-style composition.
+- Registry `@stardune/calendar`, `@stardune/date-picker` (button + popover + calendar).
+- Dependencies: **`react-day-picker`**, **`date-fns`**.
+
 ### Command, Combobox
 
 - **`command-ink` / `Command`**: cmdk palette with **sand-slip panel**, **field-wash input**, **rose hover items** (shared dropdown item ink); `CommandDialog` uses bare dialog + command panel.

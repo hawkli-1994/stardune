@@ -484,6 +484,35 @@ const items = [
     files: [{ path: "src/components/ui/combobox.tsx", type: "registry:ui", target: "components/ui/combobox.tsx" }],
   },
   {
+    file: "public/r/calendar.json",
+    meta: {
+      name: "calendar",
+      title: "Calendar",
+      description: "DayPicker with Stardune sand panel and day washes.",
+      type: "registry:ui",
+      dependencies: ["react-day-picker", "date-fns", "class-variance-authority", "radix-ui"],
+      registryDependencies: ["./stardune-theme.json", "./button.json"],
+    },
+    files: [
+      { path: "src/components/ui/calendar.tsx", type: "registry:ui", target: "components/ui/calendar.tsx" },
+      { path: "src/lib/ink/recipes/calendar-ink.ts", type: "registry:lib", target: "lib/ink/recipes/calendar-ink.ts" },
+      { path: "src/lib/ink/recipes/panel-wash.ts", type: "registry:lib", target: "lib/ink/recipes/panel-wash.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
+    file: "public/r/date-picker.json",
+    meta: {
+      name: "date-picker",
+      title: "Date Picker",
+      description: "Single and range pickers via Popover + Calendar.",
+      type: "registry:ui",
+      dependencies: ["date-fns", "react-day-picker", "radix-ui"],
+      registryDependencies: ["./stardune-theme.json", "./button.json", "./popover.json", "./calendar.json"],
+    },
+    files: [{ path: "src/components/ui/date-picker.tsx", type: "registry:ui", target: "components/ui/date-picker.tsx" }],
+  },
+  {
     file: "public/r/badge.json",
     meta: {
       name: "badge",

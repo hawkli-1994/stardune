@@ -13,7 +13,10 @@ import {
 } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { Calendar } from "@/components/ui/calendar"
 import { Combobox } from "@/components/ui/combobox"
+import { DatePicker, DateRangePicker } from "@/components/ui/date-picker"
+import type { DateRange } from "react-day-picker"
 import {
   Command,
   CommandDialog,
@@ -128,6 +131,8 @@ export function App() {
   const [volume, setVolume] = React.useState([62])
   const [surface, setSurface] = React.useState("sand")
   const [cmdOpen, setCmdOpen] = React.useState(false)
+  const [journalDate, setJournalDate] = React.useState<Date | undefined>(new Date())
+  const [tripRange, setTripRange] = React.useState<DateRange | undefined>()
 
   React.useEffect(() => {
     document.documentElement.classList.toggle("dark", dark)
@@ -451,6 +456,22 @@ export function App() {
               </div>
             </Section>
 
+            <Section title="Calendar · sand grid">
+              <Calendar
+                mode="single"
+                selected={journalDate}
+                onSelect={setJournalDate}
+                className="rounded-[var(--radius-md)]"
+              />
+            </Section>
+
+            <Section title="Date picker · popover">
+              <div className="flex max-w-md flex-col gap-4">
+                <DatePicker value={journalDate} onChange={setJournalDate} placeholder="Journal date" />
+                <DateRangePicker value={tripRange} onChange={setTripRange} placeholder="Dune trip range" />
+              </div>
+            </Section>
+
             <Section title="Command · palette">
               <Button variant="outline" size="sm" onClick={() => setCmdOpen(true)}>
                 Open command palette
@@ -646,8 +667,8 @@ export function App() {
         </SandStage>
 
         <p className="text-center text-xs text-muted-foreground">
-          Registry: <code className="text-[11px]">@stardune/command</code>,{" "}
-          <code className="text-[11px]">@stardune/combobox</code>
+          Registry: <code className="text-[11px]">@stardune/calendar</code>,{" "}
+          <code className="text-[11px]">@stardune/date-picker</code>
         </p>
       </main>
     </div>

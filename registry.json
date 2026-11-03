@@ -825,6 +825,56 @@
         }
       ],
       "dependencies": ["radix-ui"]
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "react-day-picker with sand panel ink and rose/horizon day styling.",
+      "registryDependencies": ["./r/stardune-theme.json", "./r/button.json"],
+      "files": [
+        {
+          "path": "src/components/ui/calendar.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/calendar.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/calendar-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/calendar-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/panel-wash.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/panel-wash.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": ["react-day-picker", "date-fns", "class-variance-authority", "radix-ui"]
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "Date Picker",
+      "description": "Popover date and range pickers built from Button + Calendar.",
+      "registryDependencies": [
+        "./r/stardune-theme.json",
+        "./r/button.json",
+        "./r/popover.json",
+        "./r/calendar.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/date-picker.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/date-picker.tsx"
+        }
+      ],
+      "dependencies": ["date-fns", "react-day-picker", "radix-ui"]
     }
   ]
 }
