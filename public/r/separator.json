@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "separator",
+  "title": "Separator",
+  "description": "Pencil and horizon rule separator ink.",
+  "type": "registry:ui",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "./stardune-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/separator.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/separator.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Separator as SeparatorPrimitive } from \"radix-ui\"\n\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { separatorRecipe, type SeparatorOrientation } from \"@/lib/ink/recipes/separator-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Separator({\n  className,\n  orientation = \"horizontal\",\n  decorative = true,\n  seed,\n  ref,\n  ...props\n}: React.ComponentProps<typeof SeparatorPrimitive.Root> & { seed?: string | number }) {\n  const o: SeparatorOrientation = orientation === \"vertical\" ? \"vertical\" : \"horizontal\"\n  const { hostRef, hostProps, node } = useInk({\n    recipe: separatorRecipe,\n    params: { orientation: o },\n    kind: \"separator\",\n    seed,\n    still: true,\n  })\n\n  return (\n    <SeparatorPrimitive.Root\n      data-slot=\"separator\"\n      ref={useMergedRef<HTMLDivElement>(hostRef, ref)}\n      {...hostProps}\n      decorative={decorative}\n      orientation={orientation}\n      className={cn(\n        \"relative isolate shrink-0\",\n        o === \"horizontal\" ? \"h-3 w-full\" : \"h-full min-h-16 w-3 self-stretch\",\n        className,\n      )}\n      {...props}\n    >\n      {node}\n    </SeparatorPrimitive.Root>\n  )\n}\n\nexport { Separator }\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/separator-ink.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/separator-ink.ts",
+      "content": "import { wash } from '@/lib/ink/fills'\nimport { line } from '@/lib/ink/shapes'\nimport { defineRecipe } from '@/lib/ink/recipes'\n\nexport type SeparatorOrientation = 'horizontal' | 'vertical'\n\nexport interface SeparatorParams {\n  orientation: SeparatorOrientation\n}\n\nexport const separatorRecipe = defineRecipe<SeparatorParams>({\n  id: 'separator',\n  kind: 'separator',\n  layers: ['rest'],\n  pad: 4,\n  draw(ink, { w, h }, { orientation }) {\n    ink.layer('rest', () => {\n      if (orientation === 'vertical') {\n        const x = w / 2\n        wash(ink, [[x - 1.2, 2], [x + 1.2, 2], [x + 1.2, h - 2], [x - 1.2, h - 2]], 'sand-shade', {\n          alpha: 0.12,\n          material: 'wash',\n          wobble: 0.35,\n        })\n        line(ink, x, 3, x, h - 3, {\n          pen: 'pencil.fine',\n          loose: 0.55,\n          opts: { alpha: 0.45, simple: true, color: 'line-soft' },\n        })\n        line(ink, x + 0.65, 4, x + 0.65, h - 4, {\n          pen: 'horizonPencil.fine',\n          loose: 0.45,\n          opts: { alpha: 0.32, simple: true },\n        })\n      } else {\n        const y = h / 2\n        wash(ink, [[2, y - 1.2], [w - 2, y - 1.2], [w - 2, y + 1.2], [2, y + 1.2]], 'sand-shade', {\n          alpha: 0.12,\n          material: 'wash',\n          wobble: 0.35,\n        })\n        line(ink, 3, y, w - 3, y, {\n          pen: 'pencil.fine',\n          loose: 0.55,\n          opts: { alpha: 0.45, simple: w > 320, color: 'line-soft' },\n        })\n        line(ink, 4, y + 0.65, w - 4, y + 0.65, {\n          pen: 'horizonPencil.fine',\n          loose: 0.45,\n          opts: { alpha: 0.32, simple: w > 320 },\n        })\n      }\n    })\n  },\n})\n"
+    }
+  ]
+}

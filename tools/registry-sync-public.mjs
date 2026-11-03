@@ -241,6 +241,56 @@ const items = [
     ],
   },
   {
+    file: "public/r/tooltip.json",
+    meta: {
+      name: "tooltip",
+      title: "Tooltip",
+      description: "Compact sand-slip tooltip panel ink.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/tooltip.tsx", type: "registry:ui", target: "components/ui/tooltip.tsx" },
+      { path: "src/lib/ink/recipes/tooltip-ink.ts", type: "registry:lib", target: "lib/ink/recipes/tooltip-ink.ts" },
+      { path: "src/lib/ink/recipes/panel-wash.ts", type: "registry:lib", target: "lib/ink/recipes/panel-wash.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
+    file: "public/r/toast.json",
+    meta: {
+      name: "toast",
+      title: "Toast",
+      description: "Radix toast with sand-slip surface and useToast helper.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/toast.tsx", type: "registry:ui", target: "components/ui/toast.tsx" },
+      { path: "src/hooks/use-toast.ts", type: "registry:hook", target: "hooks/use-toast.ts" },
+      { path: "src/lib/ink/recipes/toast-ink.ts", type: "registry:lib", target: "lib/ink/recipes/toast-ink.ts" },
+      { path: "src/lib/ink/recipes/panel-wash.ts", type: "registry:lib", target: "lib/ink/recipes/panel-wash.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
+    file: "public/r/separator.json",
+    meta: {
+      name: "separator",
+      title: "Separator",
+      description: "Pencil and horizon rule separator ink.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/separator.tsx", type: "registry:ui", target: "components/ui/separator.tsx" },
+      { path: "src/lib/ink/recipes/separator-ink.ts", type: "registry:lib", target: "lib/ink/recipes/separator-ink.ts" },
+    ],
+  },
+  {
     file: "public/r/badge.json",
     meta: {
       name: "badge",

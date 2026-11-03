@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Tooltip, Toast, Separator
+
+- **`panel-wash`**: `drawCompactSandSlipPanel` for small floating surfaces.
+- **`tooltip-ink` / `Tooltip`**: Compact sand-slip panel; Radix Tooltip provider/trigger/content.
+- **`toast-ink` / `Toast` + `Toaster`**: Radix Toast stack with `useToast()` helper (no sonner — matches `radix-ui` deps).
+- **`separator-ink` / `Separator`**: Soft pencil + horizon rule ink; horizontal and vertical orientations.
+- Registry stubs `@stardune/tooltip`, `@stardune/toast`, `@stardune/separator`.
+
 ### Slider, Progress, Badge
 
 - **`slider-ink` / `Slider`**: Sand track, **rose/baobab** range wash, sand-slip thumb with **star focus** halo; Radix Slider (track, range, thumb recipes).

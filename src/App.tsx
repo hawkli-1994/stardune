@@ -43,7 +43,11 @@ import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
+import { Separator } from "@/components/ui/separator"
+import { Toaster } from "@/components/ui/toast"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { SandStage } from "@/components/playground/SandStage"
+import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -67,6 +71,7 @@ export function App() {
   }, [dark])
 
   return (
+    <TooltipProvider>
     <div
       className="min-h-svh px-4 py-10"
       style={{
@@ -195,6 +200,45 @@ export function App() {
               </div>
             </Section>
 
+            <Section title="Tooltip · compact panel">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    Hover for horizon note
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Soft sand-slip tooltip, like a tiny popover.</TooltipContent>
+              </Tooltip>
+            </Section>
+
+            <Section title="Toast · Radix stack">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() =>
+                  toast({
+                    title: "Saved on the dune",
+                    description: "Your draft was written to desert paper.",
+                  })
+                }
+              >
+                Show toast
+              </Button>
+            </Section>
+
+            <Section title="Separator · pencil / horizon rule">
+              <div className="flex max-w-sm flex-col gap-4">
+                <p className="text-sm text-muted-foreground">Above the line</p>
+                <Separator />
+                <p className="text-sm text-muted-foreground">Below the line</p>
+                <div className="flex h-20 items-stretch gap-4">
+                  <span className="text-xs text-muted-foreground">Left</span>
+                  <Separator orientation="vertical" />
+                  <span className="text-xs text-muted-foreground">Right</span>
+                </div>
+              </div>
+            </Section>
+
             <Section title="Badge · sand-slip pills">
               <div className="flex flex-wrap gap-2">
                 <Badge>Rose dune</Badge>
@@ -320,11 +364,13 @@ export function App() {
         </SandStage>
 
         <p className="text-center text-xs text-muted-foreground">
-          Registry: <code className="text-[11px]">@stardune/slider</code>,{" "}
-          <code className="text-[11px]">@stardune/progress</code>,{" "}
-          <code className="text-[11px]">@stardune/badge</code>
+          Registry: <code className="text-[11px]">@stardune/tooltip</code>,{" "}
+          <code className="text-[11px]">@stardune/toast</code>,{" "}
+          <code className="text-[11px]">@stardune/separator</code>
         </p>
       </main>
     </div>
+    <Toaster />
+    </TooltipProvider>
   )
 }

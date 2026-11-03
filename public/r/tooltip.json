@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip",
+  "title": "Tooltip",
+  "description": "Compact sand-slip tooltip panel ink.",
+  "type": "registry:ui",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "./stardune-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/tooltip.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/tooltip.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Tooltip as TooltipPrimitive } from \"radix-ui\"\n\nimport { useInk } from \"@/lib/ink/react\"\nimport { tooltipContentRecipe } from \"@/lib/ink/recipes/tooltip-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction TooltipProvider({\n  delayDuration = 300,\n  ...props\n}: React.ComponentProps<typeof TooltipPrimitive.Provider>) {\n  return <TooltipPrimitive.Provider data-slot=\"tooltip-provider\" delayDuration={delayDuration} {...props} />\n}\n\nfunction Tooltip(props: React.ComponentProps<typeof TooltipPrimitive.Root>) {\n  return <TooltipPrimitive.Root data-slot=\"tooltip\" {...props} />\n}\n\nfunction TooltipTrigger(props: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {\n  return <TooltipPrimitive.Trigger data-slot=\"tooltip-trigger\" {...props} />\n}\n\nfunction TooltipContent({\n  className,\n  sideOffset = 6,\n  seed,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<typeof TooltipPrimitive.Content> & { seed?: string | number }) {\n  const { hostRef, hostProps, node } = useInk({\n    recipe: tooltipContentRecipe,\n    params: {},\n    kind: \"tooltip\",\n    seed,\n    still: true,\n  })\n\n  return (\n    <TooltipPrimitive.Portal>\n      <TooltipPrimitive.Content\n        ref={ref}\n        data-slot=\"tooltip-content\"\n        sideOffset={sideOffset}\n        className={cn(\n          \"z-50 max-w-xs origin-[var(--radix-tooltip-content-transform-origin)] outline-none\",\n          \"animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95\",\n          \"data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2\",\n          \"data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2\",\n          className,\n        )}\n        {...props}\n      >\n        <div\n          ref={hostRef}\n          {...hostProps}\n          className=\"relative isolate overflow-hidden rounded-[var(--radius-sm)] px-3 py-1.5 shadow-[0_8px_24px_-6px_rgb(var(--sd-shade)/0.22)]\"\n        >\n          {node}\n          <div className=\"relative z-[1] text-xs leading-snug text-foreground\">{children}</div>\n        </div>\n      </TooltipPrimitive.Content>\n    </TooltipPrimitive.Portal>\n  )\n}\n\nexport { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger }\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/tooltip-ink.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/tooltip-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { drawCompactSandSlipPanel } from '@/lib/ink/recipes/panel-wash'\n\nexport const tooltipContentRecipe = defineRecipe<Record<string, never>>({\n  id: 'tooltip-content',\n  kind: 'tooltip',\n  layers: ['rest'],\n  pad: 8,\n  draw(ink, { w, h }) {\n    ink.layer('rest', () => drawCompactSandSlipPanel(ink, w, h))\n  },\n})\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/panel-wash.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/panel-wash.ts",
+      "content": "import { roundRectPoly } from '@/lib/ink/geom'\nimport { box } from '@/lib/ink/shapes'\nimport { clamp } from '@/lib/ink/rng'\nimport type { Ink } from '@/lib/ink/builder'\nimport { softFill } from '@/lib/ink/recipes/wash-utils'\n\nexport type PanelTone = 'default' | 'lifted'\n\n/** Compact sand-slip panel (Tooltip / Toast). */\nexport function drawCompactSandSlipPanel(ink: Ink, w: number, h: number) {\n  const r = clamp(Math.min(w, h) * 0.1, 4, 7)\n  const inset = 0.55\n  const body = roundRectPoly(inset, inset, w - 2 * inset, h - 2 * inset, r)\n\n  ink.part('fill', () => {\n    softFill(ink, body, [\n      { color: 'sand-slip', alpha: 0.82, wobble: 0.48 },\n      { color: 'sand', alpha: 0.28, inset: 0.9, wobble: 0.55 },\n      { color: 'wash-gold', alpha: 0.06, inset: 1.6, wobble: 0.9 },\n    ])\n  })\n  box(ink, 0.55, 0.55, w - 1.1, h - 1.1, {\n    pen: 'pencil.fine',\n    corner: r,\n    loose: 0.95,\n    opts: { alpha: 0.48, wobble: 0.38, simple: w > 280 },\n  })\n  box(ink, 1.1, 1.1, w - 2.2, h - 2.2, {\n    pen: 'ink.fine',\n    corner: Math.max(2, r - 1),\n    loose: 1,\n    opts: { alpha: 0.18, wobble: 0.42, simple: true, color: 'line-soft' },\n  })\n}\n\n/** Sand-slip panel fill + double loose border (Card / Dialog / Popover). */\nexport function drawSandSlipPanel(ink: Ink, w: number, h: number, tone: PanelTone = 'default') {\n  const r = clamp(Math.min(w, h) * 0.04, 5, 12)\n  const inset = 0.7\n  const body = roundRectPoly(inset, inset, w - 2 * inset, h - 2 * inset, r)\n\n  ink.part('fill', () => {\n    softFill(ink, body, [\n      { color: 'sand-slip', alpha: tone === 'lifted' ? 0.9 : 0.78, wobble: 0.5 },\n      { color: 'sand', alpha: 0.32, inset: 1.2, wobble: 0.65 },\n      { color: 'wash-gold', alpha: 0.08, inset: 2.4, wobble: 1.1 },\n    ])\n  })\n  box(ink, 0.65, 0.65, w - 1.3, h - 1.3, {\n    pen: 'pencil.fine',\n    corner: r,\n    loose: 1.15,\n    opts: { alpha: 0.52, wobble: 0.42, simple: w > 420 },\n  })\n  box(ink, 1.4, 1.4, w - 2.8, h - 2.8, {\n    pen: 'ink.fine',\n    corner: Math.max(2, r - 1),\n    loose: 1.25,\n    opts: { alpha: 0.22, wobble: 0.5, simple: true, color: 'line-soft' },\n  })\n}\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/wash-utils.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/wash-utils.ts",
+      "content": "import type { Ink } from '@/lib/ink/builder'\nimport type { Pt } from '@/lib/ink/types'\nimport type { PaintKey } from '@/lib/ink/paint'\nimport { wash } from '@/lib/ink/fills'\n\nexport function softFill(\n  ink: Ink,\n  body: Pt[],\n  layers: Array<{ color: PaintKey; alpha: number; inset?: number; wobble?: number }>,\n) {\n  for (const layer of layers) {\n    wash(ink, body, layer.color, {\n      alpha: layer.alpha,\n      inset: layer.inset ?? 0.4,\n      wobble: layer.wobble ?? 0.95,\n      material: 'wash',\n    })\n  }\n}\n"
+    }
+  ]
+}
