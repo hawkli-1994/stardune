@@ -245,4 +245,30 @@
   :is([data-ink-host], .sd-ink-host)[data-ink-ready]:has(> svg[data-ink] [data-layer="focus"]) > :is(input, textarea, select):focus-visible {
     outline: none;
   }
+
+  @keyframes sd-skeleton-shimmer {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 0.92;
+    }
+  }
+
+  .sd-skeleton[data-loading] > svg[data-ink] [data-layer="busy"] {
+    animation: sd-skeleton-shimmer calc(1.75s * var(--sd-motion, 1)) ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sd-skeleton[data-loading] > svg[data-ink] [data-layer="busy"] {
+      animation: none;
+      opacity: 0.55;
+    }
+  }
+
+  :where([data-motion="reduced"]) .sd-skeleton[data-loading] > svg[data-ink] [data-layer="busy"] {
+    animation: none;
+    opacity: 0.55;
+  }
 }

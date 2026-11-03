@@ -291,6 +291,55 @@ const items = [
     ],
   },
   {
+    file: "public/r/avatar.json",
+    meta: {
+      name: "avatar",
+      title: "Avatar",
+      description: "Circular sand-slip ring; Radix image and fallback.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/avatar.tsx", type: "registry:ui", target: "components/ui/avatar.tsx" },
+      { path: "src/lib/ink/recipes/avatar-ink.ts", type: "registry:lib", target: "lib/ink/recipes/avatar-ink.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
+    file: "public/r/skeleton.json",
+    meta: {
+      name: "skeleton",
+      title: "Skeleton",
+      description: "Sand-shade shimmer placeholder (busy ink layer).",
+      type: "registry:ui",
+      dependencies: [],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/skeleton.tsx", type: "registry:ui", target: "components/ui/skeleton.tsx" },
+      { path: "src/lib/ink/recipes/skeleton-ink.ts", type: "registry:lib", target: "lib/ink/recipes/skeleton-ink.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
+    file: "public/r/alert.json",
+    meta: {
+      name: "alert",
+      title: "Alert",
+      description: "Sand-slip alert panel with variant accent washes.",
+      type: "registry:ui",
+      dependencies: ["class-variance-authority"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/alert.tsx", type: "registry:ui", target: "components/ui/alert.tsx" },
+      { path: "src/lib/ink/recipes/alert-ink.ts", type: "registry:lib", target: "lib/ink/recipes/alert-ink.ts" },
+      { path: "src/lib/ink/recipes/panel-wash.ts", type: "registry:lib", target: "lib/ink/recipes/panel-wash.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
     file: "public/r/badge.json",
     meta: {
       name: "badge",

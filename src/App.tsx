@@ -37,7 +37,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
+import { Skeleton } from "@/components/ui/skeleton"
 import { Progress } from "@/components/ui/progress"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
@@ -197,6 +200,51 @@ export function App() {
                 <Progress value={volume[0]} aria-label="Upload progress" />
                 <Progress value={100} aria-label="Complete" />
                 <Progress value={18} aria-label="Starting" />
+              </div>
+            </Section>
+
+            <Section title="Avatar · sand-slip ring">
+              <div className="flex items-center gap-4">
+                <Avatar>
+                  <AvatarImage src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=96&h=96&fit=crop" alt="Traveler" />
+                  <AvatarFallback>SD</AvatarFallback>
+                </Avatar>
+                <Avatar>
+                  <AvatarFallback className="text-xs">星沙</AvatarFallback>
+                </Avatar>
+              </div>
+            </Section>
+
+            <Section title="Skeleton · sand shimmer">
+              <div className="flex max-w-sm flex-col gap-3">
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-16 w-full rounded-lg" />
+              </div>
+            </Section>
+
+            <Section title="Alert · panel variants">
+              <div className="flex max-w-md flex-col gap-3">
+                <Alert variant="default">
+                  <AlertTitle>Evening journal</AlertTitle>
+                  <AlertDescription>Rose wash default — notes saved on the dune.</AlertDescription>
+                </Alert>
+                <Alert variant="success">
+                  <AlertTitle>Route confirmed</AlertTitle>
+                  <AlertDescription>Baobab success tint for completed steps.</AlertDescription>
+                </Alert>
+                <Alert variant="warning">
+                  <AlertTitle>Heat rising</AlertTitle>
+                  <AlertDescription>Ember warning wash — check supplies before dusk.</AlertDescription>
+                </Alert>
+                <Alert variant="destructive">
+                  <AlertTitle>Lost signal</AlertTitle>
+                  <AlertDescription>Deep ember destructive panel for critical errors.</AlertDescription>
+                </Alert>
+                <Alert variant="info">
+                  <AlertTitle>Horizon map</AlertTitle>
+                  <AlertDescription>Sky-line info wash for neutral guidance.</AlertDescription>
+                </Alert>
               </div>
             </Section>
 
@@ -364,9 +412,9 @@ export function App() {
         </SandStage>
 
         <p className="text-center text-xs text-muted-foreground">
-          Registry: <code className="text-[11px]">@stardune/tooltip</code>,{" "}
-          <code className="text-[11px]">@stardune/toast</code>,{" "}
-          <code className="text-[11px]">@stardune/separator</code>
+          Registry: <code className="text-[11px]">@stardune/avatar</code>,{" "}
+          <code className="text-[11px]">@stardune/skeleton</code>,{" "}
+          <code className="text-[11px]">@stardune/alert</code>
         </p>
       </main>
     </div>

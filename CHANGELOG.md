@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Avatar, Skeleton, Alert
+
+- **`avatar-ink` / `Avatar`**: Soft circular **sand-slip double ring** (Radix Image/Fallback); no mascot art.
+- **`skeleton-ink` / `Skeleton`**: Sand-shade base + **busy** shimmer layer; CSS respects `prefers-reduced-motion` and `data-motion="reduced"` (`ink-state.css`).
+- **`alert-ink` / `Alert`**: Sand-slip panel with left accent — **rose** default, **baobab** success, **ember** warning/destructive, **horizon** info; `AlertTitle` / `AlertDescription`.
+- Registry stubs `@stardune/avatar`, `@stardune/skeleton`, `@stardune/alert`.
+
 ### Tooltip, Toast, Separator
 
 - **`panel-wash`**: `drawCompactSandSlipPanel` for small floating surfaces.

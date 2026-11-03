@@ -505,6 +505,86 @@
         }
       ],
       "dependencies": ["radix-ui"]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "Circular sand-slip ring frame; Radix image and fallback.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/avatar.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/avatar.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/avatar-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/avatar-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": ["radix-ui"]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Sand-shade placeholder with gentle busy-layer shimmer.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/skeleton.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/skeleton.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/skeleton-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/skeleton-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Sand panel alerts with rose/baobab/ember/horizon variant washes.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/alert.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/alert.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/alert-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/alert-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/panel-wash.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/panel-wash.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": ["class-variance-authority"]
     }
   ]
 }

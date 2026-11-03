@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar",
+  "title": "Avatar",
+  "description": "Circular sand-slip ring; Radix image and fallback.",
+  "type": "registry:ui",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "./stardune-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/avatar.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/avatar.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Avatar as AvatarPrimitive } from \"radix-ui\"\n\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { avatarRingRecipe } from \"@/lib/ink/recipes/avatar-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Avatar({\n  className,\n  seed,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<typeof AvatarPrimitive.Root> & { seed?: string | number }) {\n  const { hostRef, hostProps, node } = useInk({\n    recipe: avatarRingRecipe,\n    params: {},\n    kind: \"avatar\",\n    seed,\n    still: true,\n  })\n\n  return (\n    <AvatarPrimitive.Root\n      data-slot=\"avatar\"\n      ref={useMergedRef<HTMLSpanElement>(hostRef, ref)}\n      {...hostProps}\n      className={cn(\"relative isolate flex size-10 shrink-0 overflow-hidden rounded-full\", className)}\n      {...props}\n    >\n      {node}\n      {children}\n    </AvatarPrimitive.Root>\n  )\n}\n\nfunction AvatarImage({ className, ref, ...props }: React.ComponentProps<typeof AvatarPrimitive.Image>) {\n  return (\n    <AvatarPrimitive.Image\n      data-slot=\"avatar-image\"\n      ref={ref}\n      className={cn(\"relative z-[1] aspect-square size-full object-cover\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AvatarFallback({ className, ref, ...props }: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {\n  return (\n    <AvatarPrimitive.Fallback\n      data-slot=\"avatar-fallback\"\n      ref={ref}\n      className={cn(\n        \"relative z-[1] flex size-full items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--sd-sand-slip)_55%,transparent)] text-sm font-medium text-foreground\",\n        className,\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { Avatar, AvatarFallback, AvatarImage }\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/avatar-ink.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/avatar-ink.ts",
+      "content": "import { wash } from '@/lib/ink/fills'\nimport { pillPoly } from '@/lib/ink/geom'\nimport { loop } from '@/lib/ink/shapes'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { softFill } from '@/lib/ink/recipes/wash-utils'\n\nexport const avatarRingRecipe = defineRecipe<Record<string, never>>({\n  id: 'avatar-ring',\n  kind: 'avatar',\n  layers: ['rest'],\n  pad: 8,\n  draw(ink, { w, h }) {\n    const d = Math.min(w, h)\n    const cx = w / 2\n    const cy = h / 2\n    const outer = d / 2 - 0.65\n    const inner = outer - 2.4\n    const body = pillPoly(cx - outer, cy - outer, outer * 2, outer * 2)\n\n    ink.layer('rest', () => {\n      softFill(ink, body, [\n        { color: 'sand-slip', alpha: 0.35, wobble: 0.42 },\n        { color: 'sand', alpha: 0.18, inset: 0.8 },\n      ])\n      wash(ink, body, 'sand-shade', { alpha: 0.12, material: 'wash', wobble: 0.35, inset: 1.2 })\n      loop(ink, cx, cy, outer, outer, {\n        pen: 'rose.fine',\n        clean: true,\n        opts: { alpha: 0.62, simple: true, wobble: 0.28 },\n      })\n      loop(ink, cx, cy, inner, inner, {\n        pen: 'pencil.fine',\n        clean: true,\n        opts: { alpha: 0.4, simple: true, color: 'line-soft' },\n      })\n    })\n  },\n})\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/wash-utils.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/wash-utils.ts",
+      "content": "import type { Ink } from '@/lib/ink/builder'\nimport type { Pt } from '@/lib/ink/types'\nimport type { PaintKey } from '@/lib/ink/paint'\nimport { wash } from '@/lib/ink/fills'\n\nexport function softFill(\n  ink: Ink,\n  body: Pt[],\n  layers: Array<{ color: PaintKey; alpha: number; inset?: number; wobble?: number }>,\n) {\n  for (const layer of layers) {\n    wash(ink, body, layer.color, {\n      alpha: layer.alpha,\n      inset: layer.inset ?? 0.4,\n      wobble: layer.wobble ?? 0.95,\n      material: 'wash',\n    })\n  }\n}\n"
+    }
+  ]
+}

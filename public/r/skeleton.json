@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "skeleton",
+  "title": "Skeleton",
+  "description": "Sand-shade shimmer placeholder (busy ink layer).",
+  "type": "registry:ui",
+  "dependencies": [],
+  "registryDependencies": [
+    "./stardune-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/skeleton.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/skeleton.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { skeletonRecipe } from \"@/lib/ink/recipes/skeleton-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Skeleton({\n  className,\n  seed,\n  ref,\n  ...props\n}: React.ComponentProps<\"div\"> & { seed?: string | number }) {\n  const { hostRef, hostProps, node } = useInk({\n    recipe: skeletonRecipe,\n    params: {},\n    kind: \"skeleton\",\n    seed,\n    still: true,\n  })\n\n  return (\n    <div\n      data-slot=\"skeleton\"\n      ref={useMergedRef<HTMLDivElement>(hostRef, ref)}\n      {...hostProps}\n      aria-busy=\"true\"\n      data-loading=\"\"\n      className={cn(\"sd-skeleton relative isolate overflow-hidden rounded-md\", className)}\n      {...props}\n    >\n      {node}\n    </div>\n  )\n}\n\nexport { Skeleton }\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/skeleton-ink.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/skeleton-ink.ts",
+      "content": "import { wash } from '@/lib/ink/fills'\nimport { roundRectPoly } from '@/lib/ink/geom'\nimport { box } from '@/lib/ink/shapes'\nimport { clamp } from '@/lib/ink/rng'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { softFill } from '@/lib/ink/recipes/wash-utils'\n\nexport const skeletonRecipe = defineRecipe<Record<string, never>>({\n  id: 'skeleton',\n  kind: 'skeleton',\n  layers: ['rest', 'busy'],\n  pad: 6,\n  draw(ink, { w, h }) {\n    const r = clamp(Math.min(w, h) * 0.12, 3, 8)\n    const body = roundRectPoly(0.5, 0.5, w - 1, h - 1, r)\n\n    ink.layer('rest', () => {\n      softFill(ink, body, [\n        { color: 'sand-shade', alpha: 0.42, wobble: 0.4 },\n        { color: 'sand', alpha: 0.2, inset: 0.7 },\n      ])\n      box(ink, 0.5, 0.5, w - 1, h - 1, {\n        pen: 'pencil.fine',\n        corner: r,\n        loose: 0.45,\n        opts: { alpha: 0.28, simple: true, color: 'line-soft' },\n      })\n    })\n\n    ink.layer('busy', () => {\n      wash(ink, body, 'sand-slip', { alpha: 0.38, material: 'wash', wobble: 0.55, inset: 0.4 })\n      wash(ink, roundRectPoly(2, 2, w - 4, h - 4, Math.max(2, r - 1)), 'star', {\n        alpha: 0.14,\n        material: 'wash',\n        wobble: 0.7,\n        inset: 0.2,\n      })\n    })\n  },\n})\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/wash-utils.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/wash-utils.ts",
+      "content": "import type { Ink } from '@/lib/ink/builder'\nimport type { Pt } from '@/lib/ink/types'\nimport type { PaintKey } from '@/lib/ink/paint'\nimport { wash } from '@/lib/ink/fills'\n\nexport function softFill(\n  ink: Ink,\n  body: Pt[],\n  layers: Array<{ color: PaintKey; alpha: number; inset?: number; wobble?: number }>,\n) {\n  for (const layer of layers) {\n    wash(ink, body, layer.color, {\n      alpha: layer.alpha,\n      inset: layer.inset ?? 0.4,\n      wobble: layer.wobble ?? 0.95,\n      material: 'wash',\n    })\n  }\n}\n"
+    }
+  ]
+}
