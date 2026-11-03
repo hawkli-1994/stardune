@@ -52,6 +52,14 @@
     rotate: none;
   }
 
+  [data-highlighted]:not([data-disabled]):not([aria-disabled="true"]) > svg[data-ink] [data-layer="hover"] {
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity var(--sd-dur-fade) var(--sd-ease-out),
+      visibility 0s;
+  }
+
   @media (hover: hover) {
     :hover:where(:not(:disabled, [aria-disabled="true"], [data-disabled]:not([data-disabled="false"]))) > svg[data-ink] [data-layer="hover"] {
       opacity: 1;

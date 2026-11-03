@@ -388,6 +388,39 @@ const items = [
     ],
   },
   {
+    file: "public/r/table.json",
+    meta: {
+      name: "table",
+      title: "Table",
+      description: "Sand-slip table with pencil row rules.",
+      type: "registry:ui",
+      dependencies: [],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/table.tsx", type: "registry:ui", target: "components/ui/table.tsx" },
+      { path: "src/lib/ink/recipes/table-ink.ts", type: "registry:lib", target: "lib/ink/recipes/table-ink.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
+    file: "public/r/dropdown-menu.json",
+    meta: {
+      name: "dropdown-menu",
+      title: "Dropdown Menu",
+      description: "Sand panel dropdown with rose item hover ink.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/dropdown-menu.tsx", type: "registry:ui", target: "components/ui/dropdown-menu.tsx" },
+      { path: "src/lib/ink/recipes/dropdown-menu-ink.ts", type: "registry:lib", target: "lib/ink/recipes/dropdown-menu-ink.ts" },
+      { path: "src/lib/ink/recipes/panel-wash.ts", type: "registry:lib", target: "lib/ink/recipes/panel-wash.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
     file: "public/r/badge.json",
     meta: {
       name: "badge",

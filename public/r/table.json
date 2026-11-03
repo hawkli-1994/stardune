@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "table",
+  "title": "Table",
+  "description": "Sand-slip table with pencil row rules.",
+  "type": "registry:ui",
+  "dependencies": [],
+  "registryDependencies": [
+    "./stardune-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/table.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/table.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { useInk } from \"@/lib/ink/react\"\nimport { tableSurfaceRecipe } from \"@/lib/ink/recipes/table-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Table({\n  className,\n  seed,\n  ref,\n  ...props\n}: React.ComponentProps<\"table\"> & { seed?: string | number }) {\n  const { hostRef, hostProps, node } = useInk({\n    recipe: tableSurfaceRecipe,\n    params: {},\n    kind: \"table\",\n    seed,\n    still: true,\n  })\n\n  return (\n    <div data-slot=\"table-container\" className=\"relative w-full overflow-x-auto\">\n      <div\n        ref={hostRef}\n        {...hostProps}\n        className=\"pointer-events-none absolute inset-0 overflow-hidden rounded-[var(--radius-md)]\"\n        aria-hidden\n      >\n        {node}\n      </div>\n      <table\n        ref={ref}\n        data-slot=\"table\"\n        className={cn(\"relative z-[1] w-full caption-bottom text-sm\", className)}\n        {...props}\n      />\n    </div>\n  )\n}\n\nfunction TableHeader({ className, ...props }: React.ComponentProps<\"thead\">) {\n  return <thead data-slot=\"table-header\" className={cn(\"[&_tr]:border-b-0\", className)} {...props} />\n}\n\nfunction TableBody({ className, ...props }: React.ComponentProps<\"tbody\">) {\n  return <tbody data-slot=\"table-body\" className={cn(\"[&_tr:last-child]:border-0\", className)} {...props} />\n}\n\nfunction TableFooter({ className, ...props }: React.ComponentProps<\"tfoot\">) {\n  return (\n    <tfoot\n      data-slot=\"table-footer\"\n      className={cn(\"border-t border-[color-mix(in_srgb,var(--sd-ink)_8%,transparent)] font-medium\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TableRow({ className, ...props }: React.ComponentProps<\"tr\">) {\n  return (\n    <tr\n      data-slot=\"table-row\"\n      className={cn(\n        \"border-b border-[color-mix(in_srgb,var(--sd-ink)_6%,transparent)] transition-colors\",\n        \"hover:bg-[color-mix(in_srgb,var(--sd-rose-wash)_12%,transparent)] data-[state=selected]:bg-[color-mix(in_srgb,var(--sd-rose-wash)_18%,transparent)]\",\n        className,\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TableHead({ className, ...props }: React.ComponentProps<\"th\">) {\n  return (\n    <th\n      data-slot=\"table-head\"\n      className={cn(\n        \"h-10 px-3 text-start align-middle text-xs font-semibold tracking-wide text-muted-foreground uppercase\",\n        \"[&:has([role=checkbox])]:pe-0\",\n        className,\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TableCell({ className, ...props }: React.ComponentProps<\"td\">) {\n  return (\n    <td\n      data-slot=\"table-cell\"\n      className={cn(\"px-3 py-2.5 align-middle text-foreground [&:has([role=checkbox])]:pe-0\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TableCaption({ className, ...props }: React.ComponentProps<\"caption\">) {\n  return (\n    <caption\n      data-slot=\"table-caption\"\n      className={cn(\"relative z-[1] mt-4 text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nexport { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow }\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/table-ink.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/table-ink.ts",
+      "content": "import { roundRectPoly } from '@/lib/ink/geom'\nimport { box, line } from '@/lib/ink/shapes'\nimport { clamp } from '@/lib/ink/rng'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { softFill } from '@/lib/ink/recipes/wash-utils'\n\nexport const tableSurfaceRecipe = defineRecipe<Record<string, never>>({\n  id: 'table-surface',\n  kind: 'table',\n  layers: ['rest'],\n  pad: 8,\n  draw(ink, { w, h }) {\n    const r = clamp(Math.min(w, h) * 0.025, 4, 8)\n    const inset = 0.6\n    const body = roundRectPoly(inset, inset, w - 2 * inset, h - 2 * inset, r)\n    const pitch = clamp(h / 8, 32, 44)\n\n    ink.layer('rest', () => {\n      softFill(ink, body, [\n        { color: 'sand-slip', alpha: 0.72, wobble: 0.45 },\n        { color: 'sand', alpha: 0.26, inset: 1, wobble: 0.5 },\n      ])\n      box(ink, 0.55, 0.55, w - 1.1, h - 1.1, {\n        pen: 'pencil.fine',\n        corner: r,\n        loose: 0.85,\n        opts: { alpha: 0.48, simple: w > 420, color: 'ink-soft' },\n      })\n      for (let y = pitch; y < h - pitch * 0.45; y += pitch) {\n        line(ink, 6, y, w - 6, y, {\n          pen: 'pencil.fine',\n          loose: 0.5,\n          opts: { alpha: 0.28, simple: w > 360, color: 'line-soft' },\n        })\n        line(ink, 8, y + 0.55, w - 8, y + 0.55, {\n          pen: 'horizonPencil.fine',\n          loose: 0.42,\n          opts: { alpha: 0.18, simple: w > 360 },\n        })\n      }\n    })\n  },\n})\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/wash-utils.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/wash-utils.ts",
+      "content": "import type { Ink } from '@/lib/ink/builder'\nimport type { Pt } from '@/lib/ink/types'\nimport type { PaintKey } from '@/lib/ink/paint'\nimport { wash } from '@/lib/ink/fills'\n\nexport function softFill(\n  ink: Ink,\n  body: Pt[],\n  layers: Array<{ color: PaintKey; alpha: number; inset?: number; wobble?: number }>,\n) {\n  for (const layer of layers) {\n    wash(ink, body, layer.color, {\n      alpha: layer.alpha,\n      inset: layer.inset ?? 0.4,\n      wobble: layer.wobble ?? 0.95,\n      material: 'wash',\n    })\n  }\n}\n"
+    }
+  ]
+}

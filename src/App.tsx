@@ -45,7 +45,24 @@ import { Progress } from "@/components/ui/progress"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Sheet,
@@ -413,6 +430,53 @@ export function App() {
               </div>
             </Section>
 
+            <Section title="Table · sand surface">
+              <Table>
+                <TableCaption>Dune waypoints — soft pencil row rules.</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Route</TableHead>
+                    <TableHead>Surface</TableHead>
+                    <TableHead className="text-end">Km</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className="font-medium">Star line</TableCell>
+                    <TableCell>Rose wash</TableCell>
+                    <TableCell className="text-end">12</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Horizon arc</TableCell>
+                    <TableCell>Sand slip</TableCell>
+                    <TableCell className="text-end">8</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Baobab bend</TableCell>
+                    <TableCell>Dune shade</TableCell>
+                    <TableCell className="text-end">24</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Section>
+
+            <Section title="Dropdown menu · compact panel">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    Open menu
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start">
+                  <DropdownMenuLabel>Journal</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>New entry</DropdownMenuItem>
+                  <DropdownMenuItem>Export sand map</DropdownMenuItem>
+                  <DropdownMenuItem disabled>Archive (disabled)</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </Section>
+
             <Section title="Sheet · dusk + sand panel">
               <Sheet>
                 <SheetTrigger asChild>
@@ -501,9 +565,8 @@ export function App() {
         </SandStage>
 
         <p className="text-center text-xs text-muted-foreground">
-          Registry: <code className="text-[11px]">@stardune/sheet</code>,{" "}
-          <code className="text-[11px]">@stardune/scroll-area</code>,{" "}
-          <code className="text-[11px]">@stardune/sidebar</code>
+          Registry: <code className="text-[11px]">@stardune/table</code>,{" "}
+          <code className="text-[11px]">@stardune/dropdown-menu</code>
         </p>
       </main>
     </div>

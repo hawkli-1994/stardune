@@ -665,6 +665,61 @@
         }
       ],
       "dependencies": ["class-variance-authority", "radix-ui"]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "Sand-slip table surface with soft pencil row rules.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/table.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/table.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/table-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/table-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "Compact sand panel menu with rose wash item ink.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/dropdown-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/dropdown-menu.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/dropdown-menu-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/dropdown-menu-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/panel-wash.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/panel-wash.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": ["radix-ui"]
     }
   ]
 }

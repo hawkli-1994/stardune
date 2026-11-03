@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Table, Dropdown Menu
+
+- **`table-ink` / `Table`**: Sand-slip surface with soft **pencil/horizon row rules**; shadcn table parts (Header, Body, Row, Head, Cell, Caption).
+- **`dropdown-menu-ink`**: Compact **sand-slip panel**; menu items with **rose hover/focus** wash ink; full Radix dropdown set.
+- **`ink-state.css`**: `[data-highlighted]` shows menu item hover layer for keyboard focus.
+- Registry stubs `@stardune/table`, `@stardune/dropdown-menu`.
+
 ### Sheet, ScrollArea, Sidebar
 
 - **`sheet-ink` / `Sheet`**: Dialog-based slide-over with **dusk overlay** + lifted **sand-slip** panel (top/bottom/left/right).
