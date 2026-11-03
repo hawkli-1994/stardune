@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Sheet, ScrollArea, Sidebar
+
+- **`sheet-ink` / `Sheet`**: Dialog-based slide-over with **dusk overlay** + lifted **sand-slip** panel (top/bottom/left/right).
+- **`scroll-area-ink` / `ScrollArea`**: Radix scroll area with optional **rose/horizon thumb** wash ink.
+- **`sidebar-ink` / `Sidebar`**: Sand-slip **rail** ink; `SidebarProvider`, `Trigger`, `Inset`, menu primitives (`--sd-sidebar-width*`).
+- Registry stubs `@stardune/sheet`, `@stardune/scroll-area`, `@stardune/sidebar`.
+
 ### Avatar, Skeleton, Alert
 
 - **`avatar-ink` / `Avatar`**: Soft circular **sand-slip double ring** (Radix Image/Fallback); no mascot art.

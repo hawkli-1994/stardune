@@ -46,6 +46,28 @@ import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import { Toaster } from "@/components/ui/toast"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
@@ -391,6 +413,73 @@ export function App() {
               </div>
             </Section>
 
+            <Section title="Sheet · dusk + sand panel">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    Open sheet
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right">
+                  <SheetHeader>
+                    <SheetTitle>Evening sheet</SheetTitle>
+                    <SheetDescription>
+                      Same lifted sand-slip ink as dialog, sliding from the dune edge with a dusk overlay.
+                    </SheetDescription>
+                  </SheetHeader>
+                </SheetContent>
+              </Sheet>
+            </Section>
+
+            <Section title="Scroll area · soft thumb">
+              <ScrollArea className="h-36 w-full max-w-sm rounded-md border border-[color-mix(in_srgb,var(--sd-ink)_8%,transparent)] p-3">
+                <div className="space-y-3 pr-3 text-sm text-muted-foreground">
+                  {Array.from({ length: 8 }, (_, i) => (
+                    <p key={i}>
+                      Line {i + 1} — scroll the sand journal; the thumb carries a rose/horizon wash.
+                    </p>
+                  ))}
+                </div>
+              </ScrollArea>
+            </Section>
+
+            <Section title="Sidebar · compact layout">
+              <SidebarProvider className="min-h-[220px] overflow-hidden rounded-lg border border-[color-mix(in_srgb,var(--sd-ink)_10%,transparent)]">
+                <Sidebar collapsible="icon" className="min-h-[220px]">
+                  <SidebarHeader>
+                    <span className="px-2 text-sm font-semibold text-foreground" data-slot="sidebar-label">
+                      星沙
+                    </span>
+                  </SidebarHeader>
+                  <SidebarContent>
+                    <SidebarGroup>
+                      <SidebarGroupLabel>Navigate</SidebarGroupLabel>
+                      <SidebarMenu>
+                        <SidebarMenuItem>
+                          <SidebarMenuButton isActive>Journal</SidebarMenuButton>
+                        </SidebarMenuItem>
+                        <SidebarMenuItem>
+                          <SidebarMenuButton>Sky map</SidebarMenuButton>
+                        </SidebarMenuItem>
+                        <SidebarMenuItem>
+                          <SidebarMenuButton>Dune notes</SidebarMenuButton>
+                        </SidebarMenuItem>
+                      </SidebarMenu>
+                    </SidebarGroup>
+                  </SidebarContent>
+                </Sidebar>
+                <SidebarInset>
+                  <div className="flex h-10 shrink-0 items-center gap-2 border-b border-[color-mix(in_srgb,var(--sd-ink)_8%,transparent)] px-3">
+                    <SidebarTrigger />
+                    <span className="text-sm font-medium text-foreground">Main inset</span>
+                  </div>
+                  <div className="p-3 text-sm text-muted-foreground">
+                    Sand-slip rail with horizon edge ink; toggle collapses to icon width.
+                  </div>
+                </SidebarInset>
+              </SidebarProvider>
+            </Section>
+
             <Section title="Card · sand-slip panel">
               <Card tone="lifted" className="max-w-md border-0 bg-transparent shadow-none">
                 <CardHeader>
@@ -412,9 +501,9 @@ export function App() {
         </SandStage>
 
         <p className="text-center text-xs text-muted-foreground">
-          Registry: <code className="text-[11px]">@stardune/avatar</code>,{" "}
-          <code className="text-[11px]">@stardune/skeleton</code>,{" "}
-          <code className="text-[11px]">@stardune/alert</code>
+          Registry: <code className="text-[11px]">@stardune/sheet</code>,{" "}
+          <code className="text-[11px]">@stardune/scroll-area</code>,{" "}
+          <code className="text-[11px]">@stardune/sidebar</code>
         </p>
       </main>
     </div>

@@ -340,6 +340,54 @@ const items = [
     ],
   },
   {
+    file: "public/r/sheet.json",
+    meta: {
+      name: "sheet",
+      title: "Sheet",
+      description: "Dusk overlay slide-over with sand-slip panel ink.",
+      type: "registry:ui",
+      dependencies: ["class-variance-authority", "radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/sheet.tsx", type: "registry:ui", target: "components/ui/sheet.tsx" },
+      { path: "src/lib/ink/recipes/sheet-ink.ts", type: "registry:lib", target: "lib/ink/recipes/sheet-ink.ts" },
+      ...panelDeps,
+    ],
+  },
+  {
+    file: "public/r/scroll-area.json",
+    meta: {
+      name: "scroll-area",
+      title: "Scroll Area",
+      description: "Radix scroll area with watercolor thumb ink.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/scroll-area.tsx", type: "registry:ui", target: "components/ui/scroll-area.tsx" },
+      { path: "src/lib/ink/recipes/scroll-area-ink.ts", type: "registry:lib", target: "lib/ink/recipes/scroll-area-ink.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
+    file: "public/r/sidebar.json",
+    meta: {
+      name: "sidebar",
+      title: "Sidebar",
+      description: "Sand-slip sidebar rail with provider/inset/menu API.",
+      type: "registry:ui",
+      dependencies: ["class-variance-authority", "radix-ui"],
+      registryDependencies: ["./stardune-theme.json", "./button.json"],
+    },
+    files: [
+      { path: "src/components/ui/sidebar.tsx", type: "registry:ui", target: "components/ui/sidebar.tsx" },
+      { path: "src/lib/ink/recipes/sidebar-ink.ts", type: "registry:lib", target: "lib/ink/recipes/sidebar-ink.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
     file: "public/r/badge.json",
     meta: {
       name: "badge",

@@ -585,6 +585,86 @@
         }
       ],
       "dependencies": ["class-variance-authority"]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "Slide-over panel with dusk overlay and sand-slip sheet ink.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/sheet.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/sheet.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/sheet-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/sheet-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/panel-wash.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/panel-wash.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": ["class-variance-authority", "radix-ui"]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "Custom scroll viewport with watercolor thumb wash.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/scroll-area.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/scroll-area.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/scroll-area-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/scroll-area-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": ["radix-ui"]
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "description": "Sand-slip rail sidebar with provider, inset, and menu buttons.",
+      "registryDependencies": ["./r/stardune-theme.json", "./r/button.json"],
+      "files": [
+        {
+          "path": "src/components/ui/sidebar.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/sidebar.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/sidebar-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/sidebar-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": ["class-variance-authority", "radix-ui"]
     }
   ]
 }
