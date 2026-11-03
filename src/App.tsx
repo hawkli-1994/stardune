@@ -14,6 +14,15 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import { SandStage } from "@/components/playground/SandStage"
 import { cn } from "@/lib/utils"
@@ -30,6 +39,8 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 export function App() {
   const [dark, setDark] = React.useState(false)
   const [indeterminate, setIndeterminate] = React.useState<boolean | "indeterminate">("indeterminate")
+  const [nightMode, setNightMode] = React.useState(false)
+  const [horizon, setHorizon] = React.useState("sand")
 
   React.useEffect(() => {
     document.documentElement.classList.toggle("dark", dark)
@@ -125,6 +136,59 @@ export function App() {
               </div>
             </Section>
 
+            <Section title="Select · trigger & panel">
+              <div className="grid max-w-xs gap-3">
+                <Select defaultValue="sand">
+                  <SelectTrigger aria-label="Surface">
+                    <SelectValue placeholder="Pick a surface" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="sand">Sand slip</SelectItem>
+                    <SelectItem value="dune">Dune shade</SelectItem>
+                    <SelectItem value="sky">Horizon sky</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select disabled>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Disabled" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="x">Hidden</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </Section>
+
+            <Section title="Switch · track & thumb">
+              <div className="flex max-w-sm flex-col gap-3">
+                <div className="flex items-center gap-2">
+                  <Switch id="sw1" checked={nightMode} onCheckedChange={setNightMode} />
+                  <Label htmlFor="sw1">Night rose / baobab track</Label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Switch id="sw-off" disabled />
+                  <Label htmlFor="sw-off">Disabled</Label>
+                </div>
+              </div>
+            </Section>
+
+            <Section title="Radio group · circles">
+              <RadioGroup value={horizon} onValueChange={setHorizon} className="max-w-xs">
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem value="sand" id="rg-sand" />
+                  <Label htmlFor="rg-sand">Sand path</Label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem value="star" id="rg-star" />
+                  <Label htmlFor="rg-star">Star route</Label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem value="rose" id="rg-rose" disabled />
+                  <Label htmlFor="rg-rose">Rose line (disabled)</Label>
+                </div>
+              </RadioGroup>
+            </Section>
+
             <Section title="Label · typography">
               <div className="flex flex-col gap-2">
                 <Label>Plain field label</Label>
@@ -153,9 +217,9 @@ export function App() {
         </SandStage>
 
         <p className="text-center text-xs text-muted-foreground">
-          Registry: <code className="text-[11px]">@stardune/textarea</code>,{" "}
-          <code className="text-[11px]">@stardune/label</code>,{" "}
-          <code className="text-[11px]">@stardune/checkbox</code>
+          Registry: <code className="text-[11px]">@stardune/select</code>,{" "}
+          <code className="text-[11px]">@stardune/switch</code>,{" "}
+          <code className="text-[11px]">@stardune/radio-group</code>
         </p>
       </main>
     </div>

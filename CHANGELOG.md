@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Select, Switch, Radio Group
+
+- **`select-ink`**: Trigger reuses `field-wash-frame` + **open** horizon wash; **`select-content`** sand-slip panel.
+- **`switch-ink`**: Sand track, **baobab/rose** checked wash, separate **thumb** recipe.
+- **`radio-ink`**: Circle outline; **rose/baobab** inner wash when selected; star/horizon focus.
+
 ### Textarea, Label, Checkbox
 
 - **`field-wash-frame.ts`**: Shared sand-slip field ink for Input and Textarea (star/horizon focus, invalid/disabled).

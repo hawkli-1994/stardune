@@ -127,6 +127,86 @@
       "dependencies": ["radix-ui"]
     },
     {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Field trigger frame plus sand-slip dropdown panel wash.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/select.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/select.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/select-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/select-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/field-wash-frame.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/field-wash-frame.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": ["radix-ui"]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "Pill track with rose/baobab wash when on and ink thumb.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/switch.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/switch.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/switch-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/switch-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": ["radix-ui"]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "Circle field with rose/baobab wash dot when selected.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/radio-group.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/radio-group.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/radio-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/radio-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": ["radix-ui"]
+    },
+    {
       "name": "checkbox",
       "type": "registry:ui",
       "title": "Checkbox",

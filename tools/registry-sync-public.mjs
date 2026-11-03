@@ -76,6 +76,54 @@ const items = [
     ],
   },
   {
+    file: "public/r/select.json",
+    meta: {
+      name: "select",
+      title: "Select",
+      description: "Input-like trigger and sand-slip dropdown panel ink.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/select.tsx", type: "registry:ui", target: "components/ui/select.tsx" },
+      { path: "src/lib/ink/recipes/select-ink.ts", type: "registry:lib", target: "lib/ink/recipes/select-ink.ts" },
+      ...fieldDeps,
+    ],
+  },
+  {
+    file: "public/r/switch.json",
+    meta: {
+      name: "switch",
+      title: "Switch",
+      description: "Watercolor track and thumb; baobab/rose when checked.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/switch.tsx", type: "registry:ui", target: "components/ui/switch.tsx" },
+      { path: "src/lib/ink/recipes/switch-ink.ts", type: "registry:lib", target: "lib/ink/recipes/switch-ink.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
+    file: "public/r/radio-group.json",
+    meta: {
+      name: "radio-group",
+      title: "Radio Group",
+      description: "Ink circle radio with rose/baobab selected wash.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/radio-group.tsx", type: "registry:ui", target: "components/ui/radio-group.tsx" },
+      { path: "src/lib/ink/recipes/radio-ink.ts", type: "registry:lib", target: "lib/ink/recipes/radio-ink.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
     file: "public/r/checkbox.json",
     meta: {
       name: "checkbox",
