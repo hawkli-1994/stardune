@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -37,6 +38,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionHeader,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -430,6 +438,34 @@ export function App() {
               </div>
             </Section>
 
+            <Section title="Accordion · sand triggers">
+              <Accordion type="single" collapsible defaultValue="journal" className="max-w-md">
+                <AccordionItem value="journal">
+                  <AccordionHeader>
+                    <AccordionTrigger>Desert journal</AccordionTrigger>
+                  </AccordionHeader>
+                  <AccordionContent>
+                    Open panels show rose and horizon underline washes on the trigger.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="sky">
+                  <AccordionHeader>
+                    <AccordionTrigger>Horizon notes</AccordionTrigger>
+                  </AccordionHeader>
+                  <AccordionContent>Content sits on a soft sand-slip wash panel.</AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </Section>
+
+            <Section title="Collapsible · single disclosure">
+              <Collapsible className="max-w-md">
+                <CollapsibleTrigger>Star field details</CollapsibleTrigger>
+                <CollapsibleContent>
+                  Collapsible uses the same trigger ink and a gentle content panel as the accordion.
+                </CollapsibleContent>
+              </Collapsible>
+            </Section>
+
             <Section title="Table · sand surface">
               <Table>
                 <TableCaption>Dune waypoints — soft pencil row rules.</TableCaption>
@@ -565,8 +601,8 @@ export function App() {
         </SandStage>
 
         <p className="text-center text-xs text-muted-foreground">
-          Registry: <code className="text-[11px]">@stardune/table</code>,{" "}
-          <code className="text-[11px]">@stardune/dropdown-menu</code>
+          Registry: <code className="text-[11px]">@stardune/accordion</code>,{" "}
+          <code className="text-[11px]">@stardune/collapsible</code>
         </p>
       </main>
     </div>

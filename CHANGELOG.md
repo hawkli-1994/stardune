@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Accordion, Collapsible
+
+- **`disclosure-ink`**: Shared sand-slip **triggers** with pencil dividers; **open** layer rose/horizon underline; soft **content** wash; **accordion item** divider ink.
+- **`accordion.tsx`**: Radix Accordion (Item, Header, Trigger, Content) with ink triggers and content panel.
+- **`collapsible.tsx`**: Radix Collapsible trigger + content; accordion-style height animations in `stardune.css`.
+- Registry stubs `@stardune/accordion`, `@stardune/collapsible`.
+
 ### Table, Dropdown Menu
 
 - **`table-ink` / `Table`**: Sand-slip surface with soft **pencil/horizon row rules**; shadcn table parts (Header, Body, Row, Head, Cell, Caption).

@@ -421,6 +421,38 @@ const items = [
     ],
   },
   {
+    file: "public/r/accordion.json",
+    meta: {
+      name: "accordion",
+      title: "Accordion",
+      description: "Sand-slip accordion with rose/horizon open trigger ink.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/accordion.tsx", type: "registry:ui", target: "components/ui/accordion.tsx" },
+      { path: "src/lib/ink/recipes/disclosure-ink.ts", type: "registry:lib", target: "lib/ink/recipes/disclosure-ink.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
+    file: "public/r/collapsible.json",
+    meta: {
+      name: "collapsible",
+      title: "Collapsible",
+      description: "Collapsible disclosure with shared trigger/content ink.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/collapsible.tsx", type: "registry:ui", target: "components/ui/collapsible.tsx" },
+      { path: "src/lib/ink/recipes/disclosure-ink.ts", type: "registry:lib", target: "lib/ink/recipes/disclosure-ink.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
     file: "public/r/badge.json",
     meta: {
       name: "badge",
