@@ -22,7 +22,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import { Switch } from "@/components/ui/switch"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { SandStage } from "@/components/playground/SandStage"
 import { cn } from "@/lib/utils"
@@ -189,6 +205,64 @@ export function App() {
               </RadioGroup>
             </Section>
 
+            <Section title="Dialog · dusk overlay">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    Open sand dialog
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Evening on the dune</DialogTitle>
+                    <DialogDescription>
+                      Modal content uses the same sand-slip panel ink as Card, over a soft sky-dusk overlay.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter className="gap-2 sm:justify-start">
+                    <Button size="sm">Continue</Button>
+                    <DialogClose asChild>
+                      <Button size="sm" variant="ghost">
+                        Close
+                      </Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </Section>
+
+            <Section title="Popover · floating panel">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="secondary" size="sm">
+                    Star notes
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <p className="font-medium text-foreground">Horizon hint</p>
+                  <p className="mt-1 text-muted-foreground">A smaller sand-slip panel for contextual copy.</p>
+                </PopoverContent>
+              </Popover>
+            </Section>
+
+            <Section title="Tabs · rose / horizon active">
+              <Tabs defaultValue="journal" className="max-w-md">
+                <TabsList>
+                  <TabsTrigger value="journal">Journal</TabsTrigger>
+                  <TabsTrigger value="sky">Sky map</TabsTrigger>
+                  <TabsTrigger value="rose" disabled>
+                    Rose
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="journal" className="text-muted-foreground">
+                  Active tab shows a rose wash with horizon underline ink.
+                </TabsContent>
+                <TabsContent value="sky" className="text-muted-foreground">
+                  Switch tabs to see the checked layer animate in.
+                </TabsContent>
+              </Tabs>
+            </Section>
+
             <Section title="Label · typography">
               <div className="flex flex-col gap-2">
                 <Label>Plain field label</Label>
@@ -217,9 +291,9 @@ export function App() {
         </SandStage>
 
         <p className="text-center text-xs text-muted-foreground">
-          Registry: <code className="text-[11px]">@stardune/select</code>,{" "}
-          <code className="text-[11px]">@stardune/switch</code>,{" "}
-          <code className="text-[11px]">@stardune/radio-group</code>
+          Registry: <code className="text-[11px]">@stardune/dialog</code>,{" "}
+          <code className="text-[11px]">@stardune/popover</code>,{" "}
+          <code className="text-[11px]">@stardune/tabs</code>
         </p>
       </main>
     </div>

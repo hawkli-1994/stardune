@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog",
+  "title": "Dialog",
+  "description": "Dusk CSS overlay and sand-slip dialog panel ink.",
+  "type": "registry:ui",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "./stardune-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/dialog.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/dialog.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Dialog as DialogPrimitive } from \"radix-ui\"\n\nimport { useInk } from \"@/lib/ink/react\"\nimport { dialogContentRecipe } from \"@/lib/ink/recipes/dialog-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Dialog(props: React.ComponentProps<typeof DialogPrimitive.Root>) {\n  return <DialogPrimitive.Root data-slot=\"dialog\" {...props} />\n}\n\nfunction DialogTrigger(props: React.ComponentProps<typeof DialogPrimitive.Trigger>) {\n  return <DialogPrimitive.Trigger data-slot=\"dialog-trigger\" {...props} />\n}\n\nfunction DialogPortal(props: React.ComponentProps<typeof DialogPrimitive.Portal>) {\n  return <DialogPrimitive.Portal data-slot=\"dialog-portal\" {...props} />\n}\n\nfunction DialogClose(props: React.ComponentProps<typeof DialogPrimitive.Close>) {\n  return <DialogPrimitive.Close data-slot=\"dialog-close\" {...props} />\n}\n\nconst overlayClass =\n  \"fixed inset-0 z-50 bg-[radial-gradient(ellipse_90%_80%_at_50%_38%,color-mix(in_srgb,var(--sd-sky-dusk)_42%,transparent),color-mix(in_srgb,var(--sd-well)_28%,rgb(var(--sd-shade)/0.45)))] \" +\n  \"data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\"\n\nfunction DialogOverlay({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Overlay>) {\n  return (\n    <DialogPrimitive.Overlay data-slot=\"dialog-overlay\" className={cn(overlayClass, className)} {...props} />\n  )\n}\n\nfunction DialogContent({\n  className,\n  children,\n  seed,\n  ref,\n  ...props\n}: React.ComponentProps<typeof DialogPrimitive.Content> & { seed?: string | number }) {\n  const { hostRef, hostProps, node } = useInk({\n    recipe: dialogContentRecipe,\n    params: { tone: 'lifted' },\n    kind: 'dialog',\n    seed,\n    still: true,\n  })\n  return (\n    <DialogPortal>\n      <DialogOverlay />\n      <DialogPrimitive.Content\n        ref={ref}\n        data-slot=\"dialog-content\"\n        className={cn(\n          \"fixed top-[50%] left-[50%] z-50 grid w-full max-w-md translate-x-[-50%] translate-y-[-50%] gap-4 duration-200\",\n          \"data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\",\n          \"data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95\",\n          className,\n        )}\n        {...props}\n      >\n        <div\n          ref={hostRef}\n          {...hostProps}\n          className=\"relative isolate overflow-hidden rounded-[var(--radius-lg)] p-6 shadow-[0_16px_48px_-12px_rgb(var(--sd-shade)/0.22)]\"\n        >\n          {node}\n          <div className=\"relative z-[1] grid gap-4\">{children}</div>\n        </div>\n      </DialogPrimitive.Content>\n    </DialogPortal>\n  )\n}\n\nfunction DialogHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"dialog-header\" className={cn(\"flex flex-col gap-2 text-center sm:text-start\", className)} {...props} />\n}\n\nfunction DialogFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"dialog-footer\"\n      className={cn(\"flex flex-col-reverse gap-2 sm:flex-row sm:justify-end\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DialogTitle({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Title>) {\n  return (\n    <DialogPrimitive.Title\n      data-slot=\"dialog-title\"\n      className={cn(\"text-lg font-semibold leading-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DialogDescription({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Description>) {\n  return (\n    <DialogPrimitive.Description\n      data-slot=\"dialog-description\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nexport {\n  Dialog,\n  DialogClose,\n  DialogContent,\n  DialogDescription,\n  DialogFooter,\n  DialogHeader,\n  DialogOverlay,\n  DialogPortal,\n  DialogTitle,\n  DialogTrigger,\n}\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/dialog-ink.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/dialog-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { drawSandSlipPanel } from '@/lib/ink/recipes/panel-wash'\n\nexport const dialogContentRecipe = defineRecipe<{ tone?: 'default' | 'lifted' }>({\n  id: 'dialog-content',\n  kind: 'dialog',\n  layers: ['rest'],\n  pad: 12,\n  draw(ink, { w, h }, { tone }) {\n    ink.layer('rest', () => drawSandSlipPanel(ink, w, h, tone ?? 'lifted'))\n  },\n})\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/panel-wash.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/panel-wash.ts",
+      "content": "import { roundRectPoly } from '@/lib/ink/geom'\nimport { box } from '@/lib/ink/shapes'\nimport { clamp } from '@/lib/ink/rng'\nimport type { Ink } from '@/lib/ink/builder'\nimport { softFill } from '@/lib/ink/recipes/wash-utils'\n\nexport type PanelTone = 'default' | 'lifted'\n\n/** Sand-slip panel fill + double loose border (Card / Dialog / Popover). */\nexport function drawSandSlipPanel(ink: Ink, w: number, h: number, tone: PanelTone = 'default') {\n  const r = clamp(Math.min(w, h) * 0.04, 5, 12)\n  const inset = 0.7\n  const body = roundRectPoly(inset, inset, w - 2 * inset, h - 2 * inset, r)\n\n  ink.part('fill', () => {\n    softFill(ink, body, [\n      { color: 'sand-slip', alpha: tone === 'lifted' ? 0.9 : 0.78, wobble: 0.5 },\n      { color: 'sand', alpha: 0.32, inset: 1.2, wobble: 0.65 },\n      { color: 'wash-gold', alpha: 0.08, inset: 2.4, wobble: 1.1 },\n    ])\n  })\n  box(ink, 0.65, 0.65, w - 1.3, h - 1.3, {\n    pen: 'pencil.fine',\n    corner: r,\n    loose: 1.15,\n    opts: { alpha: 0.52, wobble: 0.42, simple: w > 420 },\n  })\n  box(ink, 1.4, 1.4, w - 2.8, h - 2.8, {\n    pen: 'ink.fine',\n    corner: Math.max(2, r - 1),\n    loose: 1.25,\n    opts: { alpha: 0.22, wobble: 0.5, simple: true, color: 'line-soft' },\n  })\n}\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/wash-utils.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/wash-utils.ts",
+      "content": "import type { Ink } from '@/lib/ink/builder'\nimport type { Pt } from '@/lib/ink/types'\nimport type { PaintKey } from '@/lib/ink/paint'\nimport { wash } from '@/lib/ink/fills'\n\nexport function softFill(\n  ink: Ink,\n  body: Pt[],\n  layers: Array<{ color: PaintKey; alpha: number; inset?: number; wobble?: number }>,\n) {\n  for (const layer of layers) {\n    wash(ink, body, layer.color, {\n      alpha: layer.alpha,\n      inset: layer.inset ?? 0.4,\n      wobble: layer.wobble ?? 0.95,\n      material: 'wash',\n    })\n  }\n}\n"
+    }
+  ]
+}

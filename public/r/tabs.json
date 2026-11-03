@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs",
+  "title": "Tabs",
+  "description": "Tab triggers with rose and horizon active ink.",
+  "type": "registry:ui",
+  "dependencies": [
+    "class-variance-authority",
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "./stardune-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/tabs.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/tabs.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { Tabs as TabsPrimitive } from \"radix-ui\"\n\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { tabsTriggerRecipe } from \"@/lib/ink/recipes/tabs-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst TabsContext = React.createContext<{ variant: \"default\" | \"line\" }>({ variant: \"line\" })\n\nfunction Tabs({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Root>) {\n  return (\n    <TabsPrimitive.Root data-slot=\"tabs\" className={cn(\"flex flex-col gap-4\", className)} {...props} />\n  )\n}\n\nconst tabsListVariants = cva(\"inline-flex h-10 w-fit items-end justify-center gap-1 text-muted-foreground\", {\n  variants: {\n    variant: {\n      default: \"rounded-[var(--radius-md)] bg-[color-mix(in_srgb,var(--sd-sand-shade)_35%,transparent)] p-1\",\n      line: \"border-b border-[var(--sd-line-soft)] pb-0\",\n    },\n  },\n  defaultVariants: { variant: \"line\" },\n})\n\nfunction TabsList({\n  className,\n  variant = \"line\",\n  ...props\n}: React.ComponentProps<typeof TabsPrimitive.List> & VariantProps<typeof tabsListVariants>) {\n  const v = variant ?? \"line\"\n  return (\n    <TabsContext.Provider value={{ variant: v }}>\n      <TabsPrimitive.List data-slot=\"tabs-list\" data-variant={v} className={cn(tabsListVariants({ variant: v }), className)} {...props} />\n    </TabsContext.Provider>\n  )\n}\n\nfunction TabsTrigger({\n  className,\n  seed,\n  disabled,\n  ref,\n  children,\n  ...props\n}: React.ComponentProps<typeof TabsPrimitive.Trigger> & { seed?: string | number }) {\n  const { variant } = React.useContext(TabsContext)\n  const { hostRef, hostProps, node } = useInk({\n    recipe: tabsTriggerRecipe,\n    params: { variant, disabled: !!disabled },\n    kind: \"tab\",\n    seed,\n    still: true,\n  })\n  const mergedRef = useMergedRef<HTMLButtonElement>(hostRef, ref)\n\n  return (\n    <TabsPrimitive.Trigger\n      data-slot=\"tabs-trigger\"\n      ref={mergedRef}\n      {...hostProps}\n      disabled={disabled}\n      className={cn(\n        \"relative isolate inline-flex h-9 flex-1 items-center justify-center gap-1.5 px-4 text-sm font-medium whitespace-nowrap\",\n        \"text-muted-foreground transition-colors hover:text-foreground data-[state=active]:text-foreground\",\n        \"disabled:pointer-events-none disabled:opacity-60 focus-visible:outline-none\",\n        className,\n      )}\n      {...props}\n    >\n      {node}\n      <span className=\"relative z-[1]\">{children}</span>\n    </TabsPrimitive.Trigger>\n  )\n}\n\nfunction TabsContent({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Content>) {\n  return (\n    <TabsPrimitive.Content\n      data-slot=\"tabs-content\"\n      className={cn(\"text-sm outline-none focus-visible:ring-2 focus-visible:ring-[var(--sd-focus)]\", className)}\n      {...props}\n    />\n  )\n}\n\nexport { Tabs, TabsContent, TabsList, TabsTrigger }\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/tabs-ink.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/tabs-ink.ts",
+      "content": "import { wash } from '@/lib/ink/fills'\nimport { roundRectPoly } from '@/lib/ink/geom'\nimport { focusRing, line, underline } from '@/lib/ink/shapes'\nimport { defineRecipe } from '@/lib/ink/recipes'\n\nexport interface TabsTriggerParams {\n  variant?: 'default' | 'line'\n  disabled?: boolean\n}\n\nexport const tabsTriggerRecipe = defineRecipe<TabsTriggerParams>({\n  id: 'tabs',\n  kind: 'tab',\n  layers: ['rest', 'hover', 'checked', 'focus', 'disabled'],\n  lazy: ['focus'],\n  pad: 8,\n  draw(ink, { w, h }, { variant = 'line', disabled }, ctx) {\n    const baseline = h - 1.4\n    const strip = roundRectPoly(2, h - 5, w - 4, 4, 2)\n\n    if (disabled) {\n      if (ctx.lazyOnly) return\n      ink.layer('disabled', () => {\n        line(ink, 3, baseline, w - 3, baseline, { pen: 'pencil.fine', opts: { alpha: 0.3, simple: true } })\n      })\n      return\n    }\n\n    ctx.lazy('focus', (fink) => {\n      wash(fink, strip, 'star', { alpha: 0.15, material: 'wash', wobble: 0.5 })\n      focusRing(fink, 0, 0, w, h, { r: 4, pen: 'horizonPencil.fine', opts: { alpha: 0.75, simple: true } })\n    })\n    if (ctx.lazyOnly) return\n\n    ink.layer('rest', () => {\n      if (variant === 'default') {\n        wash(ink, roundRectPoly(1, 1, w - 2, h - 2, 4), 'sand-slip', { alpha: 0.35, material: 'wash', wobble: 0.45 })\n      }\n      line(ink, 2, baseline, w - 2, baseline, {\n        pen: 'pencil.fine',\n        opts: { alpha: 0.38, simple: true, color: 'line-soft' },\n      })\n    })\n\n    ink.layer('hover', () => {\n      wash(ink, strip, 'rose-wash', { alpha: 0.35, material: 'wash', wobble: 0.85 })\n      line(ink, 4, baseline, w - 4, baseline, {\n        pen: 'horizonPencil.fine',\n        opts: { alpha: 0.55, simple: true },\n      })\n    })\n\n    ink.layer('checked', () => {\n      ink.part('swipe', () => {\n        wash(ink, strip, 'rose-wash', { alpha: 0.5, material: 'wash', wobble: 0.9 })\n        wash(ink, strip, 'horizon', { alpha: 0.18, material: 'wash', inset: 0.3 })\n        underline(ink, 3, baseline, w - 6, { pen: 'rose.fine', kind: 'single', opts: { alpha: 0.85 } })\n        underline(ink, 2, baseline + 0.8, w - 4, {\n          pen: 'horizon.brush',\n          kind: 'single',\n          opts: { alpha: 0.45 },\n        })\n      })\n    })\n  },\n})\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/wash-utils.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/wash-utils.ts",
+      "content": "import type { Ink } from '@/lib/ink/builder'\nimport type { Pt } from '@/lib/ink/types'\nimport type { PaintKey } from '@/lib/ink/paint'\nimport { wash } from '@/lib/ink/fills'\n\nexport function softFill(\n  ink: Ink,\n  body: Pt[],\n  layers: Array<{ color: PaintKey; alpha: number; inset?: number; wobble?: number }>,\n) {\n  for (const layer of layers) {\n    wash(ink, body, layer.color, {\n      alpha: layer.alpha,\n      inset: layer.inset ?? 0.4,\n      wobble: layer.wobble ?? 0.95,\n      material: 'wash',\n    })\n  }\n}\n"
+    }
+  ]
+}

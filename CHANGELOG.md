@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Dialog, Popover, Tabs
+
+- **`panel-wash.ts`**: Shared sand-slip double-border panel (Card, Dialog, Popover).
+- **`dialog-ink` / `Dialog`**: Dusk radial overlay (CSS) + lifted panel ink.
+- **`popover-ink` / `Popover`**: Compact floating panel.
+- **`tabs-ink` / `Tabs`**: Triggers with rose/horizon active underline wash (`data-state=active` → checked layer).
+
 ### Select, Switch, Radio Group
 
 - **`select-ink`**: Trigger reuses `field-wash-frame` + **open** horizon wash; **`select-content`** sand-slip panel.

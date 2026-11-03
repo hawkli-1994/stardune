@@ -11,6 +11,11 @@ const fieldDeps = [
   { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
 ]
 
+const panelDeps = [
+  { path: "src/lib/ink/recipes/panel-wash.ts", type: "registry:lib", target: "lib/ink/recipes/panel-wash.ts" },
+  { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+]
+
 const items = [
   {
     file: "public/r/button.json",
@@ -140,6 +145,54 @@ const items = [
     ],
   },
   {
+    file: "public/r/dialog.json",
+    meta: {
+      name: "dialog",
+      title: "Dialog",
+      description: "Dusk CSS overlay and sand-slip dialog panel ink.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/dialog.tsx", type: "registry:ui", target: "components/ui/dialog.tsx" },
+      { path: "src/lib/ink/recipes/dialog-ink.ts", type: "registry:lib", target: "lib/ink/recipes/dialog-ink.ts" },
+      ...panelDeps,
+    ],
+  },
+  {
+    file: "public/r/popover.json",
+    meta: {
+      name: "popover",
+      title: "Popover",
+      description: "Sand-slip popover panel ink.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/popover.tsx", type: "registry:ui", target: "components/ui/popover.tsx" },
+      { path: "src/lib/ink/recipes/popover-ink.ts", type: "registry:lib", target: "lib/ink/recipes/popover-ink.ts" },
+      ...panelDeps,
+    ],
+  },
+  {
+    file: "public/r/tabs.json",
+    meta: {
+      name: "tabs",
+      title: "Tabs",
+      description: "Tab triggers with rose and horizon active ink.",
+      type: "registry:ui",
+      dependencies: ["class-variance-authority", "radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/tabs.tsx", type: "registry:ui", target: "components/ui/tabs.tsx" },
+      { path: "src/lib/ink/recipes/tabs-ink.ts", type: "registry:lib", target: "lib/ink/recipes/tabs-ink.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
     file: "public/r/card.json",
     meta: {
       name: "card",
@@ -152,7 +205,7 @@ const items = [
     files: [
       { path: "src/components/ui/card.tsx", type: "registry:ui", target: "components/ui/card.tsx" },
       { path: "src/lib/ink/recipes/card-ink.ts", type: "registry:lib", target: "lib/ink/recipes/card-ink.ts" },
-      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+      ...panelDeps,
     ],
   },
 ]

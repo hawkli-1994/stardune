@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover",
+  "title": "Popover",
+  "description": "Sand-slip popover panel ink.",
+  "type": "registry:ui",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "./stardune-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/popover.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/popover.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Popover as PopoverPrimitive } from \"radix-ui\"\n\nimport { useInk } from \"@/lib/ink/react\"\nimport { popoverContentRecipe } from \"@/lib/ink/recipes/popover-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Popover(props: React.ComponentProps<typeof PopoverPrimitive.Root>) {\n  return <PopoverPrimitive.Root data-slot=\"popover\" {...props} />\n}\n\nfunction PopoverTrigger(props: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {\n  return <PopoverPrimitive.Trigger data-slot=\"popover-trigger\" {...props} />\n}\n\nfunction PopoverAnchor(props: React.ComponentProps<typeof PopoverPrimitive.Anchor>) {\n  return <PopoverPrimitive.Anchor data-slot=\"popover-anchor\" {...props} />\n}\n\nfunction PopoverContent({\n  className,\n  align = \"center\",\n  sideOffset = 6,\n  seed,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<typeof PopoverPrimitive.Content> & { seed?: string | number }) {\n  const { hostRef, hostProps, node } = useInk({\n    recipe: popoverContentRecipe,\n    params: {},\n    kind: 'popover',\n    seed,\n    still: true,\n  })\n  return (\n    <PopoverPrimitive.Portal>\n      <PopoverPrimitive.Content\n        ref={ref}\n        data-slot=\"popover-content\"\n        align={align}\n        sideOffset={sideOffset}\n        className={cn(\n          \"z-50 w-72 outline-none\",\n          \"data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\",\n          \"data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95\",\n          className,\n        )}\n        {...props}\n      >\n        <div\n          ref={hostRef}\n          {...hostProps}\n          className=\"relative isolate overflow-hidden rounded-[var(--radius-md)] p-4 shadow-[0_10px_32px_-8px_rgb(var(--sd-shade)/0.2)]\"\n        >\n          {node}\n          <div className=\"relative z-[1] text-sm\">{children}</div>\n        </div>\n      </PopoverPrimitive.Content>\n    </PopoverPrimitive.Portal>\n  )\n}\n\nexport { Popover, PopoverAnchor, PopoverContent, PopoverTrigger }\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/popover-ink.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/popover-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { drawSandSlipPanel } from '@/lib/ink/recipes/panel-wash'\n\nexport const popoverContentRecipe = defineRecipe<Record<string, never>>({\n  id: 'popover-content',\n  kind: 'popover',\n  layers: ['rest'],\n  pad: 10,\n  draw(ink, { w, h }) {\n    ink.layer('rest', () => drawSandSlipPanel(ink, w, h, 'default'))\n  },\n})\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/panel-wash.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/panel-wash.ts",
+      "content": "import { roundRectPoly } from '@/lib/ink/geom'\nimport { box } from '@/lib/ink/shapes'\nimport { clamp } from '@/lib/ink/rng'\nimport type { Ink } from '@/lib/ink/builder'\nimport { softFill } from '@/lib/ink/recipes/wash-utils'\n\nexport type PanelTone = 'default' | 'lifted'\n\n/** Sand-slip panel fill + double loose border (Card / Dialog / Popover). */\nexport function drawSandSlipPanel(ink: Ink, w: number, h: number, tone: PanelTone = 'default') {\n  const r = clamp(Math.min(w, h) * 0.04, 5, 12)\n  const inset = 0.7\n  const body = roundRectPoly(inset, inset, w - 2 * inset, h - 2 * inset, r)\n\n  ink.part('fill', () => {\n    softFill(ink, body, [\n      { color: 'sand-slip', alpha: tone === 'lifted' ? 0.9 : 0.78, wobble: 0.5 },\n      { color: 'sand', alpha: 0.32, inset: 1.2, wobble: 0.65 },\n      { color: 'wash-gold', alpha: 0.08, inset: 2.4, wobble: 1.1 },\n    ])\n  })\n  box(ink, 0.65, 0.65, w - 1.3, h - 1.3, {\n    pen: 'pencil.fine',\n    corner: r,\n    loose: 1.15,\n    opts: { alpha: 0.52, wobble: 0.42, simple: w > 420 },\n  })\n  box(ink, 1.4, 1.4, w - 2.8, h - 2.8, {\n    pen: 'ink.fine',\n    corner: Math.max(2, r - 1),\n    loose: 1.25,\n    opts: { alpha: 0.22, wobble: 0.5, simple: true, color: 'line-soft' },\n  })\n}\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/wash-utils.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/wash-utils.ts",
+      "content": "import type { Ink } from '@/lib/ink/builder'\nimport type { Pt } from '@/lib/ink/types'\nimport type { PaintKey } from '@/lib/ink/paint'\nimport { wash } from '@/lib/ink/fills'\n\nexport function softFill(\n  ink: Ink,\n  body: Pt[],\n  layers: Array<{ color: PaintKey; alpha: number; inset?: number; wobble?: number }>,\n) {\n  for (const layer of layers) {\n    wash(ink, body, layer.color, {\n      alpha: layer.alpha,\n      inset: layer.inset ?? 0.4,\n      wobble: layer.wobble ?? 0.95,\n      material: 'wash',\n    })\n  }\n}\n"
+    }
+  ]
+}
