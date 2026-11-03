@@ -1,8 +1,9 @@
-import { bandFill, wash } from '@/lib/ink/fills'
+import { blobFill, wash } from '@/lib/ink/fills'
 import { roundRectPoly } from '@/lib/ink/geom'
-import { box, focusRing } from '@/lib/ink/shapes'
+import { box, focusRing, underline } from '@/lib/ink/shapes'
 import { clamp } from '@/lib/ink/rng'
 import { defineRecipe } from '@/lib/ink/recipes'
+import type { PaintKey } from '@/lib/ink/paint'
 
 export const buttonVariantList = ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'] as const
 export const buttonSizeList = ['default', 'sm', 'lg', 'icon'] as const
@@ -16,18 +17,18 @@ export interface ButtonParams {
   shape?: 'default' | 'pill'
 }
 
-const fillFor = (variant: ButtonVariant): 'rose' | 'star' | 'sand-shade' | 'horizon' | 'danger' | null => {
-  switch (variant) {
-    case 'default':
-      return 'rose'
-    case 'secondary':
-      return 'star'
-    case 'destructive':
-      return 'danger'
-    case 'outline':
-    case 'ghost':
-    case 'link':
-      return null
+function softFill(
+  ink: import('@/lib/ink/builder').Ink,
+  body: import('@/lib/ink/types').Pt[],
+  layers: Array<{ color: PaintKey; alpha: number; inset?: number }>,
+) {
+  for (const layer of layers) {
+    wash(ink, body, layer.color, {
+      alpha: layer.alpha,
+      inset: layer.inset ?? 0.4,
+      wobble: 0.95,
+      material: 'wash',
+    })
   }
 }
 
@@ -36,46 +37,152 @@ export const buttonRecipe = defineRecipe<ButtonParams>({
   kind: 'button',
   layers: ['rest', 'hover', 'pressed', 'focus', 'disabled'],
   lazy: ['focus', 'pressed'],
-  pad: 10,
-  draw(ink, { w, h }, { variant, disabled, shape }, ctx) {
+  pad: 12,
+  draw(ink, { w, h }, { variant, size, disabled, shape }, ctx) {
     const pill = shape === 'pill' && variant !== 'link'
-    const r = pill ? Math.min(h, w) / 2 - 0.5 : clamp(h * 0.14, 3, 6)
-    const inset = 0.6
+    const r = pill ? Math.min(h, w) / 2 - 0.5 : clamp(h * 0.16, 4, 8)
+    const inset = 0.8
     const body = roundRectPoly(inset, inset, w - 2 * inset, h - 2 * inset, r)
-    const outlinePen = variant === 'destructive' ? 'rose.fine' : 'ink.fine'
+    const small = Math.min(w, h) < 34
+    const underlineY = h / 2 + (size === 'sm' ? 6 : size === 'lg' ? 9 : 7)
 
     if (disabled) {
       if (ctx.lazyOnly) return
       ink.layer('disabled', () => {
-        wash(ink, body, 'sand-shade', { alpha: 0.55, material: 'wash' })
-        box(ink, 0.5, 0.5, w - 1, h - 1, { pen: 'pencil.fine', corner: r, opts: { alpha: 0.5 } })
+        wash(ink, body, 'sand-shade', { alpha: 0.42, wobble: 0.5, material: 'wash' })
+        box(ink, 0.6, 0.6, w - 1.2, h - 1.2, {
+          pen: 'pencil.fine',
+          corner: r,
+          loose: 0.4,
+          opts: { alpha: 0.38, simple: true },
+        })
       })
       return
     }
 
-    ctx.lazy('focus', (fink) => focusRing(fink, 0, 0, w, h, { r }))
+    ctx.lazy('focus', (fink) => {
+      wash(fink, body, 'star', { alpha: 0.2, wobble: 0.65, material: 'wash', inset: 0.2 })
+      wash(fink, body, 'wash-gold', { alpha: 0.14, wobble: 0.8, material: 'wash', inset: 1.4 })
+      focusRing(fink, 0, 0, w, h, {
+        r,
+        pen: 'horizonPencil.fine',
+        opts: { alpha: 0.88, wobble: 0.35, simple: small },
+      })
+    })
+
     ctx.lazy('pressed', (pink) => {
-      const fill = fillFor(variant)
-      if (fill) wash(pink, body, fill, { alpha: 0.28, material: 'wash' })
+      if (variant === 'link') return
+      const pressColor: PaintKey =
+        variant === 'destructive' ? 'ember-deep' : variant === 'secondary' ? 'star-deep' : variant === 'outline' ? 'horizon' : 'rose-deep'
+      wash(pink, body, pressColor, { alpha: 0.32, wobble: 0.75, material: 'wash' })
     })
     if (ctx.lazyOnly) return
 
     ink.layer('rest', () => {
-      const fill = fillFor(variant)
-      if (fill) {
-        ink.part('fill', () => bandFill(ink, body, fill, { passes: ctx.calm ? 1 : 2, alpha: fill === 'danger' ? 0.92 : 0.78 }))
-      }
-      if (variant !== 'link') {
-        box(ink, 0.5, 0.5, w - 1, h - 1, { pen: outlinePen, corner: r, loose: 0.85 })
+      switch (variant) {
+        case 'default':
+          ink.part('fill', () => {
+            softFill(ink, body, [
+              { color: 'rose-wash', alpha: 0.62 },
+              { color: 'wash-rose', alpha: 0.38, inset: 1.1 },
+              { color: 'rose', alpha: 0.22, inset: 0.2 },
+            ])
+          })
+          box(ink, 0.7, 0.7, w - 1.4, h - 1.4, {
+            pen: 'rose.fine',
+            corner: r,
+            loose: 1.05,
+            opts: { alpha: 0.72, wobble: 0.32, simple: small },
+          })
+          break
+        case 'secondary':
+          ink.part('fill', () => {
+            softFill(ink, body, [
+              { color: 'wash-gold', alpha: 0.5 },
+              { color: 'star', alpha: 0.28, inset: 0.8 },
+            ])
+            if (!small) blobFill(ink, body, 'sand-slip', { alpha: 0.35, material: 'wash', rough: 0.16 })
+          })
+          box(ink, 0.7, 0.7, w - 1.4, h - 1.4, {
+            pen: 'pencil.fine',
+            corner: r,
+            loose: 0.95,
+            opts: { alpha: 0.55, simple: small },
+          })
+          break
+        case 'destructive':
+          ink.part('fill', () => {
+            softFill(ink, body, [
+              { color: 'ember', alpha: 0.55 },
+              { color: 'wash-rose', alpha: 0.3, inset: 1 },
+            ])
+          })
+          box(ink, 0.7, 0.7, w - 1.4, h - 1.4, {
+            pen: 'ember',
+            corner: r,
+            loose: 1,
+            opts: { alpha: 0.7, simple: small },
+          })
+          break
+        case 'outline':
+          wash(ink, body, 'sand-slip', { alpha: 0.55, wobble: 0.6, material: 'wash' })
+          box(ink, 0.7, 0.7, w - 1.4, h - 1.4, {
+            pen: 'ink.fine',
+            corner: r,
+            loose: 1.1,
+            opts: { alpha: 0.65, wobble: 0.38, simple: small, color: 'ink-soft' },
+          })
+          break
+        case 'ghost':
+          break
+        case 'link':
+          underline(ink, w * 0.12, underlineY, w * 0.76, {
+            pen: 'horizonPencil.fine',
+            kind: 'single',
+            opts: { alpha: 0.85 },
+          })
+          break
       }
     })
 
     ink.layer('hover', () => {
-      if (variant === 'ghost' || variant === 'link') {
-        wash(ink, body, 'rose-wash', { alpha: 0.35 })
-        return
+      switch (variant) {
+        case 'default':
+          wash(ink, body, 'rose', { alpha: 0.18, wobble: 0.9, material: 'wash' })
+          box(ink, 1, 1, w - 2, h - 2, {
+            pen: 'rose.fine',
+            corner: r,
+            loose: 1.15,
+            opts: { alpha: 0.5, simple: true },
+          })
+          break
+        case 'secondary':
+          wash(ink, body, 'star', { alpha: 0.22, wobble: 0.85, material: 'wash' })
+          break
+        case 'destructive':
+          wash(ink, body, 'ember-deep', { alpha: 0.2, material: 'wash' })
+          break
+        case 'outline':
+          wash(ink, body, 'horizon', { alpha: 0.16, wobble: 0.7, material: 'wash' })
+          box(ink, 1, 1, w - 2, h - 2, {
+            pen: 'horizonPencil.fine',
+            corner: r,
+            loose: 0.9,
+            opts: { alpha: 0.45, simple: true },
+          })
+          break
+        case 'ghost':
+        case 'link':
+          wash(ink, body, 'rose-wash', { alpha: 0.4, wobble: 0.75, material: 'wash' })
+          if (variant === 'link') {
+            underline(ink, w * 0.08, underlineY + 0.5, w * 0.84, {
+              pen: 'horizon.brush',
+              kind: 'single',
+              opts: { alpha: 0.75 },
+            })
+          }
+          break
       }
-      box(ink, 1, 1, w - 2, h - 2, { pen: outlinePen, corner: r, loose: 0.7, opts: { alpha: 0.75, simple: true } })
     })
   },
 })

@@ -14,7 +14,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "text-primary-foreground",
-        destructive: "text-primary-foreground",
+        destructive: "text-[var(--destructive-foreground,#fffcf9)]",
         outline: "text-foreground",
         secondary: "text-secondary-foreground",
         ghost: "text-foreground",

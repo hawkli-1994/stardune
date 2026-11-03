@@ -26,13 +26,13 @@
   /* Ink lines */
   --sd-ink: #2c2834;
   --sd-ink-soft: #4a4558;
-  --sd-ink-muted: #6e6878;
+  --sd-ink-muted: #5c5568;
   --sd-pencil: #7a7368;
   --sd-wash-ink: #1e1a28;
 
   /* Accents */
-  --sd-rose: #c45c6a;
-  --sd-rose-deep: #9a3f4e;
+  --sd-rose: #b84a58;
+  --sd-rose-deep: #8f3a46;
   --sd-rose-wash: color-mix(in srgb, var(--sd-rose) 22%, transparent);
   --sd-star: #e6c35c;
   --sd-star-deep: #b08928;
@@ -67,9 +67,10 @@
   --card: var(--sd-card);
   --card-foreground: var(--sd-ink);
   --primary: var(--sd-rose);
-  --primary-foreground: #fdf8f4;
+  --primary-foreground: #fffcf9;
+  --destructive-foreground: #fff8f4;
   --secondary: var(--sd-sand-shade);
-  --secondary-foreground: var(--sd-ink);
+  --secondary-foreground: #2a2630;
   --muted: var(--sd-dune);
   --muted-foreground: var(--sd-ink-muted);
   --accent: var(--sd-star);
@@ -101,5 +102,7 @@
   --card: var(--sd-card);
   --primary: var(--sd-rose);
   --primary-foreground: #1a1214;
+  --destructive-foreground: #fff5f0;
+  --secondary-foreground: var(--sd-ink);
   --ring: var(--sd-horizon);
 }

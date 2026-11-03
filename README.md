@@ -39,6 +39,8 @@ public/r/             Registry item JSON (stub)
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run registry:check` | Verify registry file paths |
 
+Recent visual polish for the sample Button and playground is noted in [CHANGELOG.md](./CHANGELOG.md).
+
 ## License
 
 MIT — Stardune contributors. Looseleaf engine portions retain Looseleaf’s MIT notice in [NOTICE](./NOTICE).
