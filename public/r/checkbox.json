@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox",
+  "title": "Checkbox",
+  "description": "Watercolor square with baobab check and horizon indeterminate stroke.",
+  "type": "registry:ui",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "./stardune-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/checkbox.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/checkbox.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Checkbox as CheckboxPrimitive } from \"radix-ui\"\n\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { checkboxRecipe } from \"@/lib/ink/recipes/checkbox-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Checkbox({\n  className,\n  seed,\n  disabled,\n  ref,\n  ...props\n}: React.ComponentProps<typeof CheckboxPrimitive.Root> & {\n  seed?: string | number\n}) {\n  const invalid = props[\"aria-invalid\"] === true || props[\"aria-invalid\"] === \"true\"\n  const { hostRef, hostProps, node } = useInk({\n    recipe: checkboxRecipe,\n    params: { disabled: !!disabled, invalid },\n    kind: \"checkbox\",\n    seed,\n    still: true,\n  })\n  const mergedRef = useMergedRef<HTMLButtonElement>(hostRef, ref)\n\n  return (\n    <CheckboxPrimitive.Root\n      data-slot=\"checkbox\"\n      ref={mergedRef}\n      {...hostProps}\n      disabled={disabled}\n      className={cn(\n        \"peer relative isolate size-4 shrink-0 rounded-[3px] disabled:cursor-not-allowed\",\n        \"focus-visible:outline-none\",\n        className,\n      )}\n      {...props}\n    >\n      {node}\n      <CheckboxPrimitive.Indicator\n        data-slot=\"checkbox-indicator\"\n        className=\"pointer-events-none absolute inset-0 hidden forced-colors:grid forced-colors:data-[state=checked]:before:content-['✓'] forced-colors:data-[state=indeterminate]:before:content-['–']\"\n      />\n    </CheckboxPrimitive.Root>\n  )\n}\n\nexport { Checkbox }\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/checkbox-ink.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/checkbox-ink.ts",
+      "content": "import { wash } from '@/lib/ink/fills'\nimport { roundRectPoly } from '@/lib/ink/geom'\nimport { box, check, focusRing, line } from '@/lib/ink/shapes'\nimport { clamp } from '@/lib/ink/rng'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { softFill } from '@/lib/ink/recipes/wash-utils'\n\nexport interface CheckboxParams {\n  disabled?: boolean\n  invalid?: boolean\n}\n\nexport const checkboxRecipe = defineRecipe<CheckboxParams>({\n  id: 'checkbox',\n  kind: 'checkbox',\n  layers: ['rest', 'hover', 'focus', 'disabled', 'invalid', 'checked', 'indeterminate'],\n  lazy: ['focus'],\n  pad: 8,\n  draw(ink, { w, h }, { disabled, invalid }, ctx) {\n    const s = Math.min(w, h)\n    const r = clamp(s * 0.12, 2, 4)\n    const body = roundRectPoly(0.45, 0.45, w - 0.9, h - 0.9, r)\n\n    if (disabled) {\n      if (ctx.lazyOnly) return\n      ink.layer('disabled', () => {\n        wash(ink, body, 'sand-shade', { alpha: 0.45, wobble: 0.4, material: 'wash' })\n        box(ink, 0.4, 0.4, w - 0.8, h - 0.8, {\n          pen: 'pencil.fine',\n          corner: r,\n          loose: 0.35,\n          opts: { alpha: 0.38, simple: true },\n        })\n      })\n      return\n    }\n\n    if (invalid) {\n      ink.layer('invalid', () => {\n        box(ink, 0.35, 0.35, w - 0.7, h - 0.7, {\n          pen: 'rose.fine',\n          corner: r,\n          loose: 0.85,\n          opts: { alpha: 0.7, color: 'danger' },\n        })\n      })\n    }\n\n    ctx.lazy('focus', (fink) => {\n      wash(fink, body, 'star', { alpha: 0.24, wobble: 0.55, material: 'wash', inset: 0.1 })\n      focusRing(fink, 0, 0, w, h, { r, pen: 'horizonPencil.fine', opts: { alpha: 0.88, simple: true } })\n    })\n    if (ctx.lazyOnly) return\n\n    ink.layer('rest', () => {\n      softFill(ink, body, [\n        { color: 'sand-slip', alpha: 0.75, wobble: 0.5 },\n        { color: 'sand', alpha: 0.22, inset: 0.6 },\n      ])\n      box(ink, 0.4, 0.4, w - 0.8, h - 0.8, {\n        pen: invalid ? 'rose.fine' : 'pencil.fine',\n        corner: r,\n        loose: 0.9,\n        opts: { alpha: 0.58, wobble: 0.34, simple: true, color: invalid ? 'danger' : 'ink-soft' },\n      })\n    })\n\n    ink.layer('hover', () => {\n      wash(ink, body, 'rose-wash', { alpha: 0.32, wobble: 0.8, material: 'wash' })\n    })\n\n    ink.layer('checked', () => {\n      softFill(ink, body, [\n        { color: 'wash-leaf', alpha: 0.42, wobble: 0.75 },\n        { color: 'baobab', alpha: 0.22, inset: 0.5 },\n      ])\n      check(ink, s * 0.14, s * 0.1, s * 0.86, {\n        pen: 'baobabfelt.fine',\n        opts: { alpha: 0.92, wobble: 0.42, speed: 1.05 },\n      })\n    })\n\n    ink.layer('indeterminate', () => {\n      wash(ink, body, 'horizon', { alpha: 0.26, wobble: 0.65, material: 'wash' })\n      line(ink, w * 0.24, h * 0.5, w * 0.76, h * 0.5, {\n        pen: 'horizonPencil.fine',\n        opts: { alpha: 0.88, wobble: 0.35 },\n      })\n    })\n  },\n})\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/wash-utils.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/wash-utils.ts",
+      "content": "import type { Ink } from '@/lib/ink/builder'\nimport type { Pt } from '@/lib/ink/types'\nimport type { PaintKey } from '@/lib/ink/paint'\nimport { wash } from '@/lib/ink/fills'\n\nexport function softFill(\n  ink: Ink,\n  body: Pt[],\n  layers: Array<{ color: PaintKey; alpha: number; inset?: number; wobble?: number }>,\n) {\n  for (const layer of layers) {\n    wash(ink, body, layer.color, {\n      alpha: layer.alpha,\n      inset: layer.inset ?? 0.4,\n      wobble: layer.wobble ?? 0.95,\n      material: 'wash',\n    })\n  }\n}\n"
+    }
+  ]
+}

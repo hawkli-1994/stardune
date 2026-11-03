@@ -64,12 +64,92 @@
           "target": "lib/ink/recipes/input-ink.ts"
         },
         {
+          "path": "src/lib/ink/recipes/field-wash-frame.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/field-wash-frame.ts"
+        },
+        {
           "path": "src/lib/ink/recipes/wash-utils.ts",
           "type": "registry:lib",
           "target": "lib/ink/recipes/wash-utils.ts"
         }
       ],
       "dependencies": []
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Multiline field sharing input watercolor frame (softer corners).",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/textarea.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/textarea.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/textarea-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/textarea-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/field-wash-frame.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/field-wash-frame.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "Accessible Radix label; optional decorative ink underline.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/label.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/label.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/label-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/label-ink.ts"
+        }
+      ],
+      "dependencies": ["radix-ui"]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Soft square with baobab wash check and horizon indeterminate bar.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/checkbox.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/checkbox.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/checkbox-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/checkbox-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": ["radix-ui"]
     },
     {
       "name": "card",

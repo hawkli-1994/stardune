@@ -6,6 +6,11 @@ import path from "node:path"
 const root = path.resolve(import.meta.dirname, "..")
 const read = (p) => fs.readFileSync(path.join(root, p), "utf8")
 
+const fieldDeps = [
+  { path: "src/lib/ink/recipes/field-wash-frame.ts", type: "registry:lib", target: "lib/ink/recipes/field-wash-frame.ts" },
+  { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+]
+
 const items = [
   {
     file: "public/r/button.json",
@@ -36,6 +41,53 @@ const items = [
     files: [
       { path: "src/components/ui/input.tsx", type: "registry:ui", target: "components/ui/input.tsx" },
       { path: "src/lib/ink/recipes/input-ink.ts", type: "registry:lib", target: "lib/ink/recipes/input-ink.ts" },
+      ...fieldDeps,
+    ],
+  },
+  {
+    file: "public/r/textarea.json",
+    meta: {
+      name: "textarea",
+      title: "Textarea",
+      description: "Multiline sand-slip field with shared watercolor frame.",
+      type: "registry:ui",
+      dependencies: [],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/textarea.tsx", type: "registry:ui", target: "components/ui/textarea.tsx" },
+      { path: "src/lib/ink/recipes/textarea-ink.ts", type: "registry:lib", target: "lib/ink/recipes/textarea-ink.ts" },
+      ...fieldDeps,
+    ],
+  },
+  {
+    file: "public/r/label.json",
+    meta: {
+      name: "label",
+      title: "Label",
+      description: "Radix label with optional decorative ink underline.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/label.tsx", type: "registry:ui", target: "components/ui/label.tsx" },
+      { path: "src/lib/ink/recipes/label-ink.ts", type: "registry:lib", target: "lib/ink/recipes/label-ink.ts" },
+    ],
+  },
+  {
+    file: "public/r/checkbox.json",
+    meta: {
+      name: "checkbox",
+      title: "Checkbox",
+      description: "Watercolor square with baobab check and horizon indeterminate stroke.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/checkbox.tsx", type: "registry:ui", target: "components/ui/checkbox.tsx" },
+      { path: "src/lib/ink/recipes/checkbox-ink.ts", type: "registry:lib", target: "lib/ink/recipes/checkbox-ink.ts" },
       { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
     ],
   },

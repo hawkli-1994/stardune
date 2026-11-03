@@ -11,7 +11,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import { SandStage } from "@/components/playground/SandStage"
 import { cn } from "@/lib/utils"
 
@@ -26,6 +29,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 export function App() {
   const [dark, setDark] = React.useState(false)
+  const [indeterminate, setIndeterminate] = React.useState<boolean | "indeterminate">("indeterminate")
 
   React.useEffect(() => {
     document.documentElement.classList.toggle("dark", dark)
@@ -44,10 +48,9 @@ export function App() {
         <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="space-y-2">
             <p className="text-sm tracking-wide text-muted-foreground">星沙 · Stardune</p>
-            <h1 className="text-2xl font-semibold text-foreground">Component playground</h1>
+            <h1 className="text-2xl font-semibold text-foreground">Form playground</h1>
             <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-              Button, Input, and Card share the same watercolor ink recipes — sand-slip fills, rose/horizon outlines,
-              star-gold focus.
+              Button, Input, Textarea, Label, Checkbox, and Card — shared sand-slip washes and star/horizon focus.
             </p>
           </div>
           <button
@@ -75,12 +78,57 @@ export function App() {
               </div>
             </Section>
 
-            <Section title="Input · field states">
+            <Section title="Input · states">
               <div className="flex max-w-sm flex-col gap-3">
-                <Input placeholder="Name on the sand…" />
-                <Input placeholder="Focus me (Tab)" aria-label="Focus demo" />
-                <Input placeholder="Invalid value" aria-invalid="true" defaultValue="???" />
+                <Input placeholder="Name on the sand…" aria-label="Default input" />
+                <Input placeholder="Tab to focus" aria-label="Focus demo" />
+                <Input placeholder="Invalid" aria-invalid="true" defaultValue="???" />
                 <Input placeholder="Disabled" disabled />
+              </div>
+            </Section>
+
+            <Section title="Textarea · states">
+              <div className="flex max-w-md flex-col gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="ta-default">Desert journal</Label>
+                  <Textarea id="ta-default" placeholder="Write under the stars…" rows={3} />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="ta-invalid">Needs detail</Label>
+                  <Textarea id="ta-invalid" aria-invalid="true" defaultValue="Too short." rows={2} />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="ta-off">Archived</Label>
+                  <Textarea id="ta-off" disabled defaultValue="Read-only dunes." rows={2} />
+                </div>
+              </div>
+            </Section>
+
+            <Section title="Checkbox · states">
+              <div className="flex max-w-sm flex-col gap-3">
+                <div className="flex items-center gap-2">
+                  <Checkbox id="cb1" defaultChecked />
+                  <Label htmlFor="cb1">Checked (baobab wash)</Label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    id="cb-indet"
+                    checked={indeterminate}
+                    onCheckedChange={(v) => setIndeterminate(v === "indeterminate" ? "indeterminate" : !!v)}
+                  />
+                  <Label htmlFor="cb-indet">Indeterminate (horizon bar)</Label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Checkbox id="cb-off" disabled />
+                  <Label htmlFor="cb-off">Disabled</Label>
+                </div>
+              </div>
+            </Section>
+
+            <Section title="Label · typography">
+              <div className="flex flex-col gap-2">
+                <Label>Plain field label</Label>
+                <Label inkLine>Decorative ink underline (optional)</Label>
               </div>
             </Section>
 
@@ -88,11 +136,10 @@ export function App() {
               <Card tone="lifted" className="max-w-md border-0 bg-transparent shadow-none">
                 <CardHeader>
                   <CardTitle>Dune notes</CardTitle>
-                  <CardDescription>A loose panel on desert paper — not a notebook pad.</CardDescription>
+                  <CardDescription>A loose panel on desert paper.</CardDescription>
                 </CardHeader>
                 <CardContent className="text-sm leading-relaxed text-foreground/90">
-                  Cards use layered sand-slip washes and a double pencil border. Pair with inputs and buttons for a
-                  cohesive field set.
+                  Form controls share the same watercolor frame language as this card.
                 </CardContent>
                 <CardFooter className="gap-2">
                   <Button size="sm">Save draft</Button>
@@ -106,8 +153,9 @@ export function App() {
         </SandStage>
 
         <p className="text-center text-xs text-muted-foreground">
-          Tab into inputs for star/horizon focus ink. Registry stubs:{" "}
-          <code className="text-[11px]">@stardune/input</code>, <code className="text-[11px]">@stardune/card</code>.
+          Registry: <code className="text-[11px]">@stardune/textarea</code>,{" "}
+          <code className="text-[11px]">@stardune/label</code>,{" "}
+          <code className="text-[11px]">@stardune/checkbox</code>
         </p>
       </main>
     </div>

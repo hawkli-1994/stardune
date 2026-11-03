@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Textarea, Label, Checkbox
+
+- **`field-wash-frame.ts`**: Shared sand-slip field ink for Input and Textarea (star/horizon focus, invalid/disabled).
+- **`textarea-ink` / `Textarea`**: Multiline field with softer corner radius.
+- **`checkbox-ink` / `Checkbox`**: Sand square; **baobab wash + hand check**; indeterminate **horizon** bar; Radix Checkbox.
+- **`label-ink` / `Label`**: Typography-first Radix label; optional `inkLine` decorative underline only.
+
 ### Input & Card
 
 - **`input-ink` / `Input`**: Sand-slip wash field, rose/pencil outline, hover rose-wash, **star + horizon focus** ring, invalid ember wash layer.
