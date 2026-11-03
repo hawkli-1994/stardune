@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Slider, Progress, Badge
+
+- **`slider-ink` / `Slider`**: Sand track, **rose/baobab** range wash, sand-slip thumb with **star focus** halo; Radix Slider (track, range, thumb recipes).
+- **`progress-ink` / `Progress`**: Sand track + **rose/horizon** fill wash on the indicator; Radix Progress.
+- **`badge-ink` / `Badge`**: Soft sand-slip pill; **rose** (default), **star** (secondary), **baobab** (destructive), outline sand frame; CVA variants.
+- Registry stubs `@stardune/slider`, `@stardune/progress`, `@stardune/badge`.
+
 ### Dialog, Popover, Tabs
 
 - **`panel-wash.ts`**: Shared sand-slip double-border panel (Card, Dialog, Popover).

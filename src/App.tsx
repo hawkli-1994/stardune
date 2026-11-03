@@ -37,6 +37,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/components/ui/progress"
+import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
@@ -57,6 +60,7 @@ export function App() {
   const [indeterminate, setIndeterminate] = React.useState<boolean | "indeterminate">("indeterminate")
   const [nightMode, setNightMode] = React.useState(false)
   const [horizon, setHorizon] = React.useState("sand")
+  const [volume, setVolume] = React.useState([62])
 
   React.useEffect(() => {
     document.documentElement.classList.toggle("dark", dark)
@@ -172,6 +176,31 @@ export function App() {
                     <SelectItem value="x">Hidden</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+            </Section>
+
+            <Section title="Slider · sand track & rose range">
+              <div className="max-w-sm space-y-4">
+                <Slider value={volume} onValueChange={setVolume} max={100} step={1} aria-label="Volume" />
+                <p className="text-xs text-muted-foreground">Value {volume[0]} — tab thumb for star focus wash.</p>
+                <Slider defaultValue={[40]} max={100} disabled aria-label="Disabled slider" />
+              </div>
+            </Section>
+
+            <Section title="Progress · rose / horizon fill">
+              <div className="max-w-sm space-y-3">
+                <Progress value={volume[0]} aria-label="Upload progress" />
+                <Progress value={100} aria-label="Complete" />
+                <Progress value={18} aria-label="Starting" />
+              </div>
+            </Section>
+
+            <Section title="Badge · sand-slip pills">
+              <div className="flex flex-wrap gap-2">
+                <Badge>Rose dune</Badge>
+                <Badge variant="secondary">Star light</Badge>
+                <Badge variant="outline">Outline sand</Badge>
+                <Badge variant="destructive">Baobab ember</Badge>
               </div>
             </Section>
 
@@ -291,9 +320,9 @@ export function App() {
         </SandStage>
 
         <p className="text-center text-xs text-muted-foreground">
-          Registry: <code className="text-[11px]">@stardune/dialog</code>,{" "}
-          <code className="text-[11px]">@stardune/popover</code>,{" "}
-          <code className="text-[11px]">@stardune/tabs</code>
+          Registry: <code className="text-[11px]">@stardune/slider</code>,{" "}
+          <code className="text-[11px]">@stardune/progress</code>,{" "}
+          <code className="text-[11px]">@stardune/badge</code>
         </p>
       </main>
     </div>

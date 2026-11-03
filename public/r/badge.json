@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "title": "Badge",
+  "description": "Soft sand-slip pill with rose, star, and baobab washes.",
+  "type": "registry:ui",
+  "dependencies": [
+    "class-variance-authority",
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "./stardune-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/badge.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/badge.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { Slot } from \"radix-ui\"\n\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { badgeRecipe } from \"@/lib/ink/recipes/badge-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst badgeVariants = cva(\n  \"relative isolate inline-flex shrink-0 items-center justify-center rounded-full border border-transparent px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap transition-colors [&>svg]:size-3 [&>svg]:pointer-events-none\",\n  {\n    variants: {\n      variant: {\n        default: \"text-[var(--primary-foreground,#fffcf9)]\",\n        secondary: \"text-secondary-foreground\",\n        destructive: \"text-[var(--destructive-foreground,#fffcf9)]\",\n        outline: \"text-foreground\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  },\n)\n\nfunction Badge({\n  className,\n  variant,\n  asChild = false,\n  seed,\n  ref,\n  ...props\n}: React.ComponentProps<\"span\"> &\n  VariantProps<typeof badgeVariants> & {\n    asChild?: boolean\n    seed?: string | number\n  }) {\n  const v = variant ?? \"default\"\n  const { hostRef, hostProps, node } = useInk({\n    recipe: badgeRecipe,\n    params: { variant: v },\n    kind: \"badge\",\n    seed,\n    still: true,\n  })\n  const mergedRef = useMergedRef<HTMLElement>(hostRef, ref as React.Ref<HTMLElement> | undefined)\n  const Comp = asChild ? Slot.Root : \"span\"\n\n  return (\n    <Comp\n      data-slot=\"badge\"\n      data-variant={v}\n      ref={mergedRef}\n      {...hostProps}\n      className={cn(badgeVariants({ variant: v, className }))}\n      {...props}\n    >\n      {node}\n      {props.children}\n    </Comp>\n  )\n}\n\nexport { Badge, badgeVariants }\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/badge-ink.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/badge-ink.ts",
+      "content": "import { wash } from '@/lib/ink/fills'\nimport { roundRectPoly } from '@/lib/ink/geom'\nimport { box } from '@/lib/ink/shapes'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { softFill } from '@/lib/ink/recipes/wash-utils'\n\nexport const badgeVariantList = ['default', 'secondary', 'outline', 'destructive'] as const\nexport type BadgeVariant = (typeof badgeVariantList)[number]\n\nexport interface BadgeParams {\n  variant: BadgeVariant\n}\n\nexport const badgeRecipe = defineRecipe<BadgeParams>({\n  id: 'badge',\n  kind: 'badge',\n  layers: ['rest', 'hover'],\n  pad: 8,\n  draw(ink, { w, h }, { variant }) {\n    const r = Math.min(h / 2 - 0.5, 999)\n    const inset = 0.65\n    const body = roundRectPoly(inset, inset, w - 2 * inset, h - 2 * inset, r)\n\n    ink.layer('rest', () => {\n      if (variant === 'outline') {\n        wash(ink, body, 'sand-slip', { alpha: 0.55, material: 'wash', wobble: 0.42 })\n        box(ink, 0.55, 0.55, w - 1.1, h - 1.1, {\n          pen: 'pencil.fine',\n          corner: r,\n          loose: 0.7,\n          opts: { alpha: 0.52, simple: true, color: 'ink-soft' },\n        })\n        return\n      }\n\n      const fills: { color: Parameters<typeof softFill>[2][number]['color']; alpha: number; inset?: number }[] =\n        variant === 'default'\n          ? [\n              { color: 'rose-wash', alpha: 0.48, inset: 0 },\n              { color: 'rose', alpha: 0.18, inset: 0.55 },\n            ]\n          : variant === 'secondary'\n            ? [\n                { color: 'star', alpha: 0.38, inset: 0 },\n                { color: 'wash-gold', alpha: 0.22, inset: 0.5 },\n              ]\n            : [\n                { color: 'baobab', alpha: 0.4, inset: 0 },\n                { color: 'rose-wash', alpha: 0.22, inset: 0.55 },\n              ]\n\n      softFill(ink, body, fills)\n      const pen =\n        variant === 'default' ? 'rose.fine' : variant === 'secondary' ? 'horizonPencil.fine' : 'baobabfelt.fine'\n      box(ink, 0.6, 0.6, w - 1.2, h - 1.2, {\n        pen,\n        corner: r,\n        loose: 0.65,\n        opts: { alpha: 0.55, simple: true },\n      })\n    })\n\n    ink.layer('hover', () => {\n      wash(ink, body, variant === 'secondary' ? 'star' : 'rose-wash', {\n        alpha: 0.18,\n        material: 'wash',\n        wobble: 0.55,\n      })\n    })\n  },\n})\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/wash-utils.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/wash-utils.ts",
+      "content": "import type { Ink } from '@/lib/ink/builder'\nimport type { Pt } from '@/lib/ink/types'\nimport type { PaintKey } from '@/lib/ink/paint'\nimport { wash } from '@/lib/ink/fills'\n\nexport function softFill(\n  ink: Ink,\n  body: Pt[],\n  layers: Array<{ color: PaintKey; alpha: number; inset?: number; wobble?: number }>,\n) {\n  for (const layer of layers) {\n    wash(ink, body, layer.color, {\n      alpha: layer.alpha,\n      inset: layer.inset ?? 0.4,\n      wobble: layer.wobble ?? 0.95,\n      material: 'wash',\n    })\n  }\n}\n"
+    }
+  ]
+}

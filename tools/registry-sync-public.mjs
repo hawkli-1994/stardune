@@ -208,6 +208,54 @@ const items = [
       ...panelDeps,
     ],
   },
+  {
+    file: "public/r/slider.json",
+    meta: {
+      name: "slider",
+      title: "Slider",
+      description: "Sand track with rose/baobab range wash and star focus thumb.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/slider.tsx", type: "registry:ui", target: "components/ui/slider.tsx" },
+      { path: "src/lib/ink/recipes/slider-ink.ts", type: "registry:lib", target: "lib/ink/recipes/slider-ink.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
+    file: "public/r/progress.json",
+    meta: {
+      name: "progress",
+      title: "Progress",
+      description: "Sand-slip track with rose/horizon watercolor fill.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/progress.tsx", type: "registry:ui", target: "components/ui/progress.tsx" },
+      { path: "src/lib/ink/recipes/progress-ink.ts", type: "registry:lib", target: "lib/ink/recipes/progress-ink.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
+    file: "public/r/badge.json",
+    meta: {
+      name: "badge",
+      title: "Badge",
+      description: "Soft sand-slip pill with rose, star, and baobab washes.",
+      type: "registry:ui",
+      dependencies: ["class-variance-authority", "radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/badge.tsx", type: "registry:ui", target: "components/ui/badge.tsx" },
+      { path: "src/lib/ink/recipes/badge-ink.ts", type: "registry:lib", target: "lib/ink/recipes/badge-ink.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
 ]
 
 for (const item of items) {

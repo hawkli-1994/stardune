@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress",
+  "title": "Progress",
+  "description": "Sand-slip track with rose/horizon watercolor fill.",
+  "type": "registry:ui",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "./stardune-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/progress.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/progress.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Progress as ProgressPrimitive } from \"radix-ui\"\n\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { progressFillRecipe, progressTrackRecipe } from \"@/lib/ink/recipes/progress-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Progress({\n  className,\n  value,\n  seed,\n  ref,\n  ...props\n}: React.ComponentProps<typeof ProgressPrimitive.Root> & { seed?: string | number }) {\n  const disabled = props[\"aria-disabled\"] === true || props[\"aria-disabled\"] === \"true\"\n  const { hostRef, hostProps, node, seed: hostSeed } = useInk({\n    recipe: progressTrackRecipe,\n    params: { disabled },\n    kind: \"progress\",\n    seed,\n    still: true,\n  })\n\n  return (\n    <ProgressPrimitive.Root\n      data-slot=\"progress\"\n      ref={useMergedRef<HTMLDivElement>(hostRef, ref)}\n      {...hostProps}\n      value={value}\n      className={cn(\"relative isolate h-2 w-full overflow-hidden rounded-full\", className)}\n      {...props}\n    >\n      {node}\n      <ProgressIndicator value={value} seed={hostSeed} disabled={disabled} />\n    </ProgressPrimitive.Root>\n  )\n}\n\nfunction ProgressIndicator({\n  value,\n  seed,\n  disabled,\n  className,\n  ref,\n  ...props\n}: React.ComponentProps<typeof ProgressPrimitive.Indicator> & {\n  value?: number | null\n  seed: string\n  disabled?: boolean\n}) {\n  const { hostRef, hostProps, node } = useInk({\n    recipe: progressFillRecipe,\n    params: { disabled: !!disabled },\n    kind: \"progress-fill\",\n    seed: `${seed}-fill`,\n    still: true,\n  })\n\n  return (\n    <ProgressPrimitive.Indicator\n      data-slot=\"progress-indicator\"\n      ref={useMergedRef<HTMLDivElement>(hostRef, ref)}\n      {...hostProps}\n      className={cn(\"h-full w-full flex-1 transition-transform duration-(--sd-dur-pop) ease-out\", className)}\n      style={{ transform: `translateX(-${100 - (value ?? 0)}%)` }}\n      {...props}\n    >\n      {node}\n    </ProgressPrimitive.Indicator>\n  )\n}\n\nexport { Progress }\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/progress-ink.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/progress-ink.ts",
+      "content": "import { wash } from '@/lib/ink/fills'\nimport { pillPoly } from '@/lib/ink/geom'\nimport { box } from '@/lib/ink/shapes'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { softFill } from '@/lib/ink/recipes/wash-utils'\n\nexport interface ProgressTrackParams {\n  disabled?: boolean\n}\n\nexport const progressTrackRecipe = defineRecipe<ProgressTrackParams>({\n  id: 'progress-track',\n  kind: 'progress',\n  layers: ['rest'],\n  pad: 6,\n  draw(ink, { w, h }) {\n    const r = h / 2\n    const body = pillPoly(0.4, 0.4, w - 0.8, h - 0.8)\n    ink.layer('rest', () => {\n      softFill(ink, body, [\n        { color: 'sand-shade', alpha: 0.5, wobble: 0.45 },\n        { color: 'sand-slip', alpha: 0.22, inset: 0.5 },\n      ])\n      box(ink, 0.45, 0.45, w - 0.9, h - 0.9, {\n        pen: 'pencil.fine',\n        corner: r,\n        loose: 0.65,\n        opts: { alpha: 0.42, simple: true, color: 'line-soft' },\n      })\n    })\n  },\n})\n\nexport interface ProgressFillParams {\n  disabled?: boolean\n}\n\nexport const progressFillRecipe = defineRecipe<ProgressFillParams>({\n  id: 'progress-fill',\n  kind: 'progress-fill',\n  layers: ['rest'],\n  pad: 6,\n  draw(ink, { w, h }, { disabled }) {\n    const r = Math.max(1, h / 2 - 0.2)\n    const body = pillPoly(0.35, 0.35, Math.max(1, w - 0.7), h - 0.7)\n    ink.layer('rest', () => {\n      if (disabled) {\n        wash(ink, body, 'sand-shade', { alpha: 0.32, material: 'wash', wobble: 0.4 })\n        return\n      }\n      softFill(ink, body, [\n        { color: 'rose-wash', alpha: 0.55, wobble: 0.58 },\n        { color: 'horizon', alpha: 0.32, inset: 0.55 },\n      ])\n      if (w > 6) {\n        box(ink, 0.5, 0.5, w - 1, h - 1, {\n          pen: 'horizonPencil.fine',\n          corner: r,\n          loose: 0.5,\n          opts: { alpha: 0.48, simple: true },\n        })\n      }\n    })\n  },\n})\n"
+    },
+    {
+      "path": "src/lib/ink/recipes/wash-utils.ts",
+      "type": "registry:lib",
+      "target": "lib/ink/recipes/wash-utils.ts",
+      "content": "import type { Ink } from '@/lib/ink/builder'\nimport type { Pt } from '@/lib/ink/types'\nimport type { PaintKey } from '@/lib/ink/paint'\nimport { wash } from '@/lib/ink/fills'\n\nexport function softFill(\n  ink: Ink,\n  body: Pt[],\n  layers: Array<{ color: PaintKey; alpha: number; inset?: number; wobble?: number }>,\n) {\n  for (const layer of layers) {\n    wash(ink, body, layer.color, {\n      alpha: layer.alpha,\n      inset: layer.inset ?? 0.4,\n      wobble: layer.wobble ?? 0.95,\n      material: 'wash',\n    })\n  }\n}\n"
+    }
+  ]
+}
