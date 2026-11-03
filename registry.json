@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "@stardune",
+  "homepage": "https://example.com/stardune",
+  "items": [
+    {
+      "name": "stardune-theme",
+      "type": "registry:style",
+      "title": "Stardune theme",
+      "description": "星沙 watercolor tokens (--sd-*) and ink layer CSS.",
+      "files": [
+        {
+          "path": "src/styles/theme.css",
+          "type": "registry:file",
+          "target": "src/styles/theme.css"
+        },
+        {
+          "path": "src/styles/ink-state.css",
+          "type": "registry:file",
+          "target": "src/styles/ink-state.css"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Primary action with Stardune ink frame.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/button.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/button.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/button-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/button-ink.ts"
+        }
+      ],
+      "dependencies": ["class-variance-authority", "radix-ui"]
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+/*
+  致敬风 token 草案 — 前缀 --sd-（随库名可改）
+  气质：水彩线稿 · 沙色纸 · 夜空靛 · 玫瑰红强调 · 星金点缀
+  刻意避开：笔记本 kraft / 马克笔橙 / Kevin 手写字感
+*/
+
+:root {
+  /* —— Surfaces（日间 · 沙纸） —— */
+  --sd-sky: #e8f0f6;           /* 浅昼空，桌面底 */
+  --sd-sky-dusk: #c5d4e8;      /* 黄昏天 */
+  --sd-sand: #f4ebe0;          /* 主纸面 */
+  --sd-sand-shade: #e6d8c8;    /* 纸阴影 / 凹陷 */
+  --sd-sand-slip: #faf4ec;     /* 更亮便签层 */
+  --sd-card: #f7efe4;          /* 卡片 */
+  --sd-dune: #d9c4a8;          /* 沙丘分隔 / 次表面 */
+  --sd-well: #1a2332;          /* 深井 / 暗色表面（夜） */
+
+  /* —— Ink（线与字） —— */
+  --sd-ink: #2c2834;           /* 主墨，略偏靛 */
+  --sd-ink-soft: #4a4558;
+  --sd-ink-muted: #6e6878;
+  --sd-pencil: #7a7368;        /* 淡铅笔注 */
+  --sd-wash-ink: #1e1a28;      /* 湿墨深端 */
+
+  /* —— Accents（致敬：玫瑰 / 星 / 远行） —— */
+  --sd-rose: #c45c6a;          /* 主行动 · 玫瑰水彩 */
+  --sd-rose-deep: #9a3f4e;
+  --sd-rose-wash: color-mix(in srgb, var(--sd-rose) 22%, transparent);
+  --sd-star: #e6c35c;          /* 高亮 / 选中星金 */
+  --sd-star-deep: #b08928;
+  --sd-horizon: #5b7fa6;       /* 链接 / 焦点 · 地平线蓝 */
+  --sd-horizon-deep: #3d5f86;
+  --sd-baobab: #4f6b4a;        /* 成功 · 远树绿 */
+  --sd-baobab-deep: #355038;
+  --sd-ember: #c46a3a;         /* 警告 · 落日余烬 */
+  --sd-ember-deep: #8f4524;
+  --sd-danger: #b33a3a;
+
+  /* —— Chart / 点缀色（水彩点，非荧光马克笔） —— */
+  --sd-wash-rose: #e8a0a8;
+  --sd-wash-gold: #e8d48a;
+  --sd-wash-sky: #9bb8d4;
+  --sd-wash-leaf: #8fad86;
+  --sd-wash-violet: #a89bc4;
+
+  /* —— Lines / focus —— */
+  --sd-line: color-mix(in srgb, var(--sd-ink) 28%, transparent);
+  --sd-line-soft: color-mix(in srgb, var(--sd-ink) 14%, transparent);
+  --sd-focus: var(--sd-horizon);
+  --sd-link: var(--sd-horizon);
+  --sd-link-hover: var(--sd-horizon-deep);
+  --sd-placeholder: var(--sd-pencil);
+  --sd-caret: var(--sd-rose);
+  --sd-hi-select: color-mix(in srgb, var(--sd-star) 45%, transparent);
+  --sd-shade: 44 40 52;        /* umber 混色基底 RGB */
+
+  /* —— shadcn 语义别名（示例映射，可再调） —— */
+  --background: var(--sd-sand);
+  --foreground: var(--sd-ink);
+  --card: var(--sd-card);
+  --card-foreground: var(--sd-ink);
+  --primary: var(--sd-rose);
+  --primary-foreground: #fdf8f4;
+  --secondary: var(--sd-sand-shade);
+  --secondary-foreground: var(--sd-ink);
+  --muted: var(--sd-dune);
+  --muted-foreground: var(--sd-ink-muted);
+  --accent: var(--sd-star);
+  --accent-foreground: var(--sd-ink);
+  --destructive: var(--sd-danger);
+  --border: var(--sd-line);
+  --ring: var(--sd-focus);
+  --input: var(--sd-sand-slip);
+}
+
+.dark {
+  --sd-sky: #0f141c;
+  --sd-sand: #1a2332;
+  --sd-sand-shade: #121820;
+  --sd-sand-slip: #222c3c;
+  --sd-card: #1e2838;
+  --sd-dune: #2a3548;
+  --sd-ink: #ebe4d8;
+  --sd-ink-soft: #cfc6b8;
+  --sd-ink-muted: #9a9286;
+  --sd-pencil: #8a8378;
+  --sd-rose: #e08a94;
+  --sd-star: #f0d78a;
+  --sd-horizon: #8eb0d4;
+  --sd-baobab: #8fad86;
+  --background: var(--sd-sand);
+  --foreground: var(--sd-ink);
+  --card: var(--sd-card);
+  --primary: var(--sd-rose);
+  --primary-foreground: #1a1214;
+  --ring: var(--sd-horizon);
+}

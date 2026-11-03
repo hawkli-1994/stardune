@@ -1,0 +1,105 @@
+/*
+  Stardune (星沙) design tokens — prefix --sd-
+  Watercolor line · sand paper · night indigo · rose accent · star gold
+*/
+
+:root {
+  /* Surfaces */
+  --sd-sky: #e8f0f6;
+  --sd-sky-dusk: #c5d4e8;
+  --sd-sand: #f4ebe0;
+  --sd-sand-shade: #e6d8c8;
+  --sd-sand-slip: #faf4ec;
+  --sd-card: #f7efe4;
+  --sd-dune: #d9c4a8;
+  --sd-well: #1a2332;
+
+  /* Ink engine paper-stock aliases (texture pipeline) */
+  --sd-paper: var(--sd-sand);
+  --sd-slip: var(--sd-sand-slip);
+  --sd-graph: var(--sd-sky-dusk);
+  --sd-check: color-mix(in srgb, var(--sd-baobab) 18%, var(--sd-sand));
+  --sd-kraft: var(--sd-dune);
+  --sd-desk: var(--sd-sky);
+  --sd-desk-deep: var(--sd-sky-dusk);
+
+  /* Ink lines */
+  --sd-ink: #2c2834;
+  --sd-ink-soft: #4a4558;
+  --sd-ink-muted: #6e6878;
+  --sd-pencil: #7a7368;
+  --sd-wash-ink: #1e1a28;
+
+  /* Accents */
+  --sd-rose: #c45c6a;
+  --sd-rose-deep: #9a3f4e;
+  --sd-rose-wash: color-mix(in srgb, var(--sd-rose) 22%, transparent);
+  --sd-star: #e6c35c;
+  --sd-star-deep: #b08928;
+  --sd-horizon: #5b7fa6;
+  --sd-horizon-deep: #3d5f86;
+  --sd-baobab: #4f6b4a;
+  --sd-baobab-deep: #355038;
+  --sd-ember: #c46a3a;
+  --sd-ember-deep: #8f4524;
+  --sd-danger: #b33a3a;
+
+  --sd-wash-rose: #e8a0a8;
+  --sd-wash-gold: #e8d48a;
+  --sd-wash-sky: #9bb8d4;
+  --sd-wash-leaf: #8fad86;
+  --sd-wash-violet: #a89bc4;
+
+  --sd-line: color-mix(in srgb, var(--sd-ink) 28%, transparent);
+  --sd-line-soft: color-mix(in srgb, var(--sd-ink) 14%, transparent);
+  --sd-focus: var(--sd-horizon);
+  --sd-link: var(--sd-horizon);
+  --sd-link-hover: var(--sd-horizon-deep);
+  --sd-placeholder: var(--sd-pencil);
+  --sd-caret: var(--sd-rose);
+  --sd-hi-select: color-mix(in srgb, var(--sd-star) 45%, transparent);
+  --sd-shade: 44 40 52;
+  --sd-blend: multiply;
+
+  /* shadcn semantic aliases */
+  --background: var(--sd-sand);
+  --foreground: var(--sd-ink);
+  --card: var(--sd-card);
+  --card-foreground: var(--sd-ink);
+  --primary: var(--sd-rose);
+  --primary-foreground: #fdf8f4;
+  --secondary: var(--sd-sand-shade);
+  --secondary-foreground: var(--sd-ink);
+  --muted: var(--sd-dune);
+  --muted-foreground: var(--sd-ink-muted);
+  --accent: var(--sd-star);
+  --accent-foreground: var(--sd-ink);
+  --destructive: var(--sd-danger);
+  --border: var(--sd-line);
+  --ring: var(--sd-focus);
+  --input: var(--sd-sand-slip);
+  --radius: 6px;
+}
+
+.dark {
+  --sd-sky: #0f141c;
+  --sd-sand: #1a2332;
+  --sd-sand-shade: #121820;
+  --sd-sand-slip: #222c3c;
+  --sd-card: #1e2838;
+  --sd-dune: #2a3548;
+  --sd-ink: #ebe4d8;
+  --sd-ink-soft: #cfc6b8;
+  --sd-ink-muted: #9a9286;
+  --sd-pencil: #8a8378;
+  --sd-rose: #e08a94;
+  --sd-star: #f0d78a;
+  --sd-horizon: #8eb0d4;
+  --sd-baobab: #8fad86;
+  --background: var(--sd-sand);
+  --foreground: var(--sd-ink);
+  --card: var(--sd-card);
+  --primary: var(--sd-rose);
+  --primary-foreground: #1a1214;
+  --ring: var(--sd-horizon);
+}

@@ -1,0 +1,75 @@
+@import "tailwindcss";
+@import "./theme.css";
+@import "./ink-state.css";
+
+@custom-variant dark (&:is(.dark *));
+@custom-variant calm (&:where([data-density="calm"], [data-density="calm"] *));
+@custom-variant compact (&:where([data-density="compact"], [data-density="compact"] *));
+
+:root,
+[data-theme],
+[data-sd-scope] {
+  --sd-wobble: 1;
+  --sd-stroke-fine: 1.55;
+  --sd-stroke-brush: 2.8;
+  --sd-bleed: 5;
+  --sd-misreg-k: 1;
+  --sd-hover-tilt: -0.6deg;
+  --sd-hover-misreg: 0.3;
+  --sd-press-misreg: -0.65;
+  --sd-press-sink: 1px;
+  --sd-motion: 1;
+  --sd-ease-out: ease-out;
+  --sd-ease-settle: cubic-bezier(0.2, 0.9, 0.25, 1.1);
+  --sd-ease-pop: cubic-bezier(0.2, 0.9, 0.3, 1.12);
+  --sd-dur-press: calc(0.09s * var(--sd-motion));
+  --sd-dur-hover: calc(0.12s * var(--sd-motion));
+  --sd-dur-fade: calc(0.15s * var(--sd-motion));
+  --sd-dur-pop: calc(0.18s * var(--sd-motion));
+  --sd-dur-sheet: calc(0.28s * var(--sd-motion));
+  --sd-ease-in: ease-in;
+}
+
+[data-density="calm"] {
+  --sd-wobble: 0.55;
+  --sd-stroke-fine: 1.05;
+  --sd-misreg-k: 0;
+  --sd-hover-tilt: 0deg;
+}
+
+[data-motion="reduced"] {
+  --sd-motion: 0;
+  --sd-hover-tilt: 0deg;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: system-ui, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  }
+}

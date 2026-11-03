@@ -1,0 +1,7 @@
+Stardune (星沙) includes ink rendering engine code adapted from Looseleaf
+(https://github.com/kevintngo/looseleaf), MIT License, Copyright (c) 2026
+Looseleaf contributors.
+
+Adapted files live under src/lib/ink/ (excluding Stardune-specific recipes,
+paint tokens, and pens tables). Visual design, tokens (--sd-*), components, and
+recipes are original to Stardune.
