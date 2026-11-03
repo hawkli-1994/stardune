@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "combobox",
+  "title": "Combobox",
+  "description": "Searchable combobox built from Popover + Command.",
+  "type": "registry:ui",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "./stardune-theme.json",
+    "./command.json",
+    "./button.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/combobox.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/combobox.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Popover as PopoverPrimitive } from \"radix-ui\"\n\nimport { Button } from \"@/components/ui/button\"\nimport {\n  Command,\n  CommandEmpty,\n  CommandGroup,\n  CommandInput,\n  CommandItem,\n  CommandList,\n} from \"@/components/ui/command\"\nimport { cn } from \"@/lib/utils\"\n\nexport type ComboboxOption = {\n  value: string\n  label: string\n  keywords?: string[]\n}\n\nfunction ComboboxPopoverContent({\n  className,\n  align = \"start\",\n  sideOffset = 4,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<typeof PopoverPrimitive.Content>) {\n  return (\n    <PopoverPrimitive.Portal>\n      <PopoverPrimitive.Content\n        ref={ref}\n        data-slot=\"combobox-content\"\n        align={align}\n        sideOffset={sideOffset}\n        className={cn(\n          \"z-50 w-[var(--radix-popover-trigger-width)] min-w-[12rem] outline-none\",\n          \"data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\",\n          \"data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95\",\n          className,\n        )}\n        {...props}\n      >\n        {children}\n      </PopoverPrimitive.Content>\n    </PopoverPrimitive.Portal>\n  )\n}\n\nfunction Combobox({\n  options,\n  value,\n  onValueChange,\n  placeholder = \"Select…\",\n  searchPlaceholder = \"Search…\",\n  emptyText = \"No results.\",\n  className,\n  disabled,\n}: {\n  options: ComboboxOption[]\n  value?: string\n  onValueChange?: (value: string) => void\n  placeholder?: string\n  searchPlaceholder?: string\n  emptyText?: string\n  className?: string\n  disabled?: boolean\n}) {\n  const [open, setOpen] = React.useState(false)\n  const selected = options.find((o) => o.value === value)\n\n  return (\n    <PopoverPrimitive.Root open={open} onOpenChange={setOpen}>\n      <PopoverPrimitive.Trigger asChild>\n        <Button\n          variant=\"outline\"\n          role=\"combobox\"\n          aria-expanded={open}\n          disabled={disabled}\n          className={cn(\"w-full max-w-xs justify-between font-normal\", className)}\n        >\n          <span className=\"truncate\">{selected ? selected.label : placeholder}</span>\n          <span className=\"shrink-0 opacity-60\" aria-hidden>\n            ▾\n          </span>\n        </Button>\n      </PopoverPrimitive.Trigger>\n      <ComboboxPopoverContent className=\"p-0\">\n        <Command>\n          <CommandInput placeholder={searchPlaceholder} />\n          <CommandList>\n            <CommandEmpty>{emptyText}</CommandEmpty>\n            <CommandGroup>\n              {options.map((option) => (\n                <CommandItem\n                  key={option.value}\n                  value={option.value}\n                  keywords={option.keywords ?? [option.label]}\n                  onSelect={(current) => {\n                    onValueChange?.(current === value ? \"\" : current)\n                    setOpen(false)\n                  }}\n                >\n                  {option.label}\n                  {value === option.value ? (\n                    <span className=\"ms-auto text-xs text-muted-foreground\" aria-hidden>\n                      ✓\n                    </span>\n                  ) : null}\n                </CommandItem>\n              ))}\n            </CommandGroup>\n          </CommandList>\n        </Command>\n      </ComboboxPopoverContent>\n    </PopoverPrimitive.Root>\n  )\n}\n\nexport { Combobox, ComboboxPopoverContent }\n"
+    }
+  ]
+}

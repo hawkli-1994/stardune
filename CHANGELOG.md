@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Command, Combobox
+
+- **`command-ink` / `Command`**: cmdk palette with **sand-slip panel**, **field-wash input**, **rose hover items** (shared dropdown item ink); `CommandDialog` uses bare dialog + command panel.
+- **`combobox.tsx`**: Popover trigger + **Command** list (`Combobox`, `ComboboxPopoverContent` without double panel ink).
+- **`DialogContent`**: optional `bare` for composed surfaces.
+- **`ink-state.css`**: `[data-selected="true"]` drives cmdk item hover ink.
+- Registry `@stardune/command`, `@stardune/combobox` (depends on command + button).
+- Dependency: **`cmdk`**.
+
 ### Accordion, Collapsible
 
 - **`disclosure-ink`**: Shared sand-slip **triggers** with pencil dividers; **open** layer rose/horizon underline; soft **content** wash; **accordion item** divider ink.

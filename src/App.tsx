@@ -13,6 +13,17 @@ import {
 } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { Combobox } from "@/components/ui/combobox"
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandShortcut,
+} from "@/components/ui/command"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -115,6 +126,8 @@ export function App() {
   const [nightMode, setNightMode] = React.useState(false)
   const [horizon, setHorizon] = React.useState("sand")
   const [volume, setVolume] = React.useState([62])
+  const [surface, setSurface] = React.useState("sand")
+  const [cmdOpen, setCmdOpen] = React.useState(false)
 
   React.useEffect(() => {
     document.documentElement.classList.toggle("dark", dark)
@@ -438,6 +451,38 @@ export function App() {
               </div>
             </Section>
 
+            <Section title="Command · palette">
+              <Button variant="outline" size="sm" onClick={() => setCmdOpen(true)}>
+                Open command palette
+              </Button>
+              <CommandDialog open={cmdOpen} onOpenChange={setCmdOpen}>
+                <CommandInput placeholder="Search dunes, routes, notes…" />
+                <CommandList>
+                  <CommandEmpty>No matches on the sand.</CommandEmpty>
+                  <CommandGroup heading="Journal">
+                    <CommandItem>
+                      New entry
+                      <CommandShortcut>⌘N</CommandShortcut>
+                    </CommandItem>
+                    <CommandItem>Export star map</CommandItem>
+                  </CommandGroup>
+                </CommandList>
+              </CommandDialog>
+            </Section>
+
+            <Section title="Combobox · popover + command">
+              <Combobox
+                value={surface}
+                onValueChange={setSurface}
+                placeholder="Pick a surface"
+                options={[
+                  { value: "sand", label: "Sand slip", keywords: ["dune"] },
+                  { value: "rose", label: "Rose wash", keywords: ["sunset"] },
+                  { value: "horizon", label: "Horizon sky" },
+                ]}
+              />
+            </Section>
+
             <Section title="Accordion · sand triggers">
               <Accordion type="single" collapsible defaultValue="journal" className="max-w-md">
                 <AccordionItem value="journal">
@@ -601,8 +646,8 @@ export function App() {
         </SandStage>
 
         <p className="text-center text-xs text-muted-foreground">
-          Registry: <code className="text-[11px]">@stardune/accordion</code>,{" "}
-          <code className="text-[11px]">@stardune/collapsible</code>
+          Registry: <code className="text-[11px]">@stardune/command</code>,{" "}
+          <code className="text-[11px]">@stardune/combobox</code>
         </p>
       </main>
     </div>

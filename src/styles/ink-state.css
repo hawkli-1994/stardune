@@ -52,7 +52,8 @@
     rotate: none;
   }
 
-  [data-highlighted]:not([data-disabled]):not([aria-disabled="true"]) > svg[data-ink] [data-layer="hover"] {
+  [data-highlighted]:not([data-disabled]):not([aria-disabled="true"]) > svg[data-ink] [data-layer="hover"],
+  [data-selected="true"]:not([data-disabled="true"]) > svg[data-ink] [data-layer="hover"] {
     opacity: 1;
     visibility: visible;
     transition:

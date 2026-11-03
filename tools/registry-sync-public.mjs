@@ -453,6 +453,37 @@ const items = [
     ],
   },
   {
+    file: "public/r/command.json",
+    meta: {
+      name: "command",
+      title: "Command",
+      description: "cmdk palette with Stardune sand panel and item washes.",
+      type: "registry:ui",
+      dependencies: ["cmdk", "radix-ui"],
+      registryDependencies: ["./stardune-theme.json", "./dialog.json"],
+    },
+    files: [
+      { path: "src/components/ui/command.tsx", type: "registry:ui", target: "components/ui/command.tsx" },
+      { path: "src/lib/ink/recipes/command-ink.ts", type: "registry:lib", target: "lib/ink/recipes/command-ink.ts" },
+      { path: "src/lib/ink/recipes/dropdown-menu-ink.ts", type: "registry:lib", target: "lib/ink/recipes/dropdown-menu-ink.ts" },
+      { path: "src/lib/ink/recipes/field-wash-frame.ts", type: "registry:lib", target: "lib/ink/recipes/field-wash-frame.ts" },
+      { path: "src/lib/ink/recipes/panel-wash.ts", type: "registry:lib", target: "lib/ink/recipes/panel-wash.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
+    file: "public/r/combobox.json",
+    meta: {
+      name: "combobox",
+      title: "Combobox",
+      description: "Searchable combobox built from Popover + Command.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json", "./command.json", "./button.json"],
+    },
+    files: [{ path: "src/components/ui/combobox.tsx", type: "registry:ui", target: "components/ui/combobox.tsx" }],
+  },
+  {
     file: "public/r/badge.json",
     meta: {
       name: "badge",
