@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Navigation Menu, Menubar
+
+- **`navigation-menu-ink` / `NavigationMenu`**: Radix top nav with **rose/horizon open underline** trigger ink; viewport/content uses **compact sand-slip panel** (shared dropdown content recipe); link rows with rose focus wash.
+- **`menubar-ink` / `Menubar`**: **Sand-slip rail** root ink; trigger **open/hover** washes; full menubar primitives with **dropdown item ink** (submenus, checkbox, radio, separators).
+- Registry `@stardune/navigation-menu`, `@stardune/menubar` (CVA on nav trigger style).
+
 ### Calendar, Date Picker
 
 - **`calendar-ink` / `Calendar`**: react-day-picker v9 on **sand-slip panel** ink; **rose selected** wash, **horizon today** ring, soft pencil cell hovers; range styling included.

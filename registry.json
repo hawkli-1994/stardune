@@ -875,6 +875,76 @@
         }
       ],
       "dependencies": ["date-fns", "react-day-picker", "radix-ui"]
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "title": "Navigation Menu",
+      "description": "Horizontal top nav with rose underline triggers and sand-slip dropdown panels.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/navigation-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/navigation-menu.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/navigation-menu-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/navigation-menu-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/dropdown-menu-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/dropdown-menu-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/panel-wash.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/panel-wash.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": ["class-variance-authority", "radix-ui"]
+    },
+    {
+      "name": "menubar",
+      "type": "registry:ui",
+      "title": "Menubar",
+      "description": "Desktop menu bar with sand-slip rail, ink triggers, and rose menu items.",
+      "registryDependencies": ["./r/stardune-theme.json"],
+      "files": [
+        {
+          "path": "src/components/ui/menubar.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/menubar.tsx"
+        },
+        {
+          "path": "src/lib/ink/recipes/menubar-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/menubar-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/dropdown-menu-ink.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/dropdown-menu-ink.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/panel-wash.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/panel-wash.ts"
+        },
+        {
+          "path": "src/lib/ink/recipes/wash-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/ink/recipes/wash-utils.ts"
+        }
+      ],
+      "dependencies": ["radix-ui"]
     }
   ]
 }

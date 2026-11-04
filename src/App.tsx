@@ -85,6 +85,30 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  Menubar,
+  MenubarCheckboxItem,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
+  MenubarTrigger,
+} from "@/components/ui/menubar"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Sheet,
@@ -133,6 +157,8 @@ export function App() {
   const [cmdOpen, setCmdOpen] = React.useState(false)
   const [journalDate, setJournalDate] = React.useState<Date | undefined>(new Date())
   const [tripRange, setTripRange] = React.useState<DateRange | undefined>()
+  const [showGrid, setShowGrid] = React.useState(true)
+  const [mapZoom, setMapZoom] = React.useState("medium")
 
   React.useEffect(() => {
     document.documentElement.classList.toggle("dark", dark)
@@ -577,6 +603,87 @@ export function App() {
                   <DropdownMenuItem disabled>Archive (disabled)</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+            </Section>
+
+            <Section title="Navigation menu · top nav">
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>Explore</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid gap-2 md:w-[320px] md:grid-cols-2">
+                        <li>
+                          <NavigationMenuLink href="#">Dune trails</NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink href="#">Star charts</NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink href="#">Horizon notes</NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink href="#">Sand archives</NavigationMenuLink>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationMenuLink
+                      href="#"
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "inline-flex h-9 items-center text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      About
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+            </Section>
+
+            <Section title="Menubar · desktop menus">
+              <Menubar>
+                <MenubarMenu>
+                  <MenubarTrigger>File</MenubarTrigger>
+                  <MenubarContent>
+                    <MenubarItem>
+                      New journal
+                      <MenubarShortcut>⌘N</MenubarShortcut>
+                    </MenubarItem>
+                    <MenubarItem>Open map…</MenubarItem>
+                    <MenubarSeparator />
+                    <MenubarSub>
+                      <MenubarSubTrigger>Export</MenubarSubTrigger>
+                      <MenubarSubContent>
+                        <MenubarItem>PNG sketch</MenubarItem>
+                        <MenubarItem>SVG ink</MenubarItem>
+                      </MenubarSubContent>
+                    </MenubarSub>
+                  </MenubarContent>
+                </MenubarMenu>
+                <MenubarMenu>
+                  <MenubarTrigger>View</MenubarTrigger>
+                  <MenubarContent>
+                    <MenubarCheckboxItem checked={showGrid} onCheckedChange={(v) => setShowGrid(v === true)}>
+                      Show grid
+                    </MenubarCheckboxItem>
+                    <MenubarSeparator />
+                    <MenubarRadioGroup value={mapZoom} onValueChange={setMapZoom}>
+                      <MenubarRadioItem value="near">Near zoom</MenubarRadioItem>
+                      <MenubarRadioItem value="medium">Medium zoom</MenubarRadioItem>
+                      <MenubarRadioItem value="far">Far zoom</MenubarRadioItem>
+                    </MenubarRadioGroup>
+                  </MenubarContent>
+                </MenubarMenu>
+                <MenubarMenu>
+                  <MenubarTrigger>Edit</MenubarTrigger>
+                  <MenubarContent>
+                    <MenubarItem>Undo</MenubarItem>
+                    <MenubarItem disabled>Redo (disabled)</MenubarItem>
+                  </MenubarContent>
+                </MenubarMenu>
+              </Menubar>
             </Section>
 
             <Section title="Sheet · dusk + sand panel">

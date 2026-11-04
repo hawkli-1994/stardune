@@ -513,6 +513,42 @@ const items = [
     files: [{ path: "src/components/ui/date-picker.tsx", type: "registry:ui", target: "components/ui/date-picker.tsx" }],
   },
   {
+    file: "public/r/navigation-menu.json",
+    meta: {
+      name: "navigation-menu",
+      title: "Navigation Menu",
+      description: "Top nav triggers with sand-slip viewport panels.",
+      type: "registry:ui",
+      dependencies: ["class-variance-authority", "radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/navigation-menu.tsx", type: "registry:ui", target: "components/ui/navigation-menu.tsx" },
+      { path: "src/lib/ink/recipes/navigation-menu-ink.ts", type: "registry:lib", target: "lib/ink/recipes/navigation-menu-ink.ts" },
+      { path: "src/lib/ink/recipes/dropdown-menu-ink.ts", type: "registry:lib", target: "lib/ink/recipes/dropdown-menu-ink.ts" },
+      { path: "src/lib/ink/recipes/panel-wash.ts", type: "registry:lib", target: "lib/ink/recipes/panel-wash.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
+    file: "public/r/menubar.json",
+    meta: {
+      name: "menubar",
+      title: "Menubar",
+      description: "Sand-slip menu bar with nested menus and rose item ink.",
+      type: "registry:ui",
+      dependencies: ["radix-ui"],
+      registryDependencies: ["./stardune-theme.json"],
+    },
+    files: [
+      { path: "src/components/ui/menubar.tsx", type: "registry:ui", target: "components/ui/menubar.tsx" },
+      { path: "src/lib/ink/recipes/menubar-ink.ts", type: "registry:lib", target: "lib/ink/recipes/menubar-ink.ts" },
+      { path: "src/lib/ink/recipes/dropdown-menu-ink.ts", type: "registry:lib", target: "lib/ink/recipes/dropdown-menu-ink.ts" },
+      { path: "src/lib/ink/recipes/panel-wash.ts", type: "registry:lib", target: "lib/ink/recipes/panel-wash.ts" },
+      { path: "src/lib/ink/recipes/wash-utils.ts", type: "registry:lib", target: "lib/ink/recipes/wash-utils.ts" },
+    ],
+  },
+  {
     file: "public/r/badge.json",
     meta: {
       name: "badge",
